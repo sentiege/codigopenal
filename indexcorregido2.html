@@ -21,6 +21,7 @@
       --radius-lg: 16px;
       --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.12);
       --sidebar-width: 320px;
+      --player-height: 90px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -30,7 +31,7 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       display: grid;
       grid-template-columns: var(--sidebar-width) 1fr;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto 1fr auto;
       overflow: hidden;
     }
 
@@ -46,10 +47,7 @@
       overflow: hidden;
       transition: transform 0.25s ease;
     }
-    .sidebar-header {
-      margin-bottom: 14px;
-      text-align: center;
-    }
+    .sidebar-header { margin-bottom: 14px; text-align: center; }
     .sidebar-logo {
       display: block;
       width: 100%;
@@ -72,95 +70,46 @@
     }
     .search-input::placeholder { color: rgba(226, 232, 240, 0.7); }
     .search-clear {
-      position: absolute;
-      right: 10px;
-      top: 50%;
+      position: absolute; right: 10px; top: 50%;
       transform: translateY(-50%);
-      background: none;
-      border: none;
+      background: none; border: none;
       color: rgba(226, 232, 240, 0.6);
-      cursor: pointer;
-      font-size: 14px;
-      display: none;
-      line-height: 1;
+      cursor: pointer; font-size: 14px; display: none; line-height: 1;
     }
     .search-clear.visible { display: block; }
-
-    /* Search results panel */
     .search-results {
-      display: none;
-      flex-direction: column;
-      gap: 4px;
-      margin-top: 8px;
-      flex: 1;
-      overflow-y: auto;
+      display: none; flex-direction: column; gap: 4px;
+      margin-top: 8px; flex: 1; overflow-y: auto;
     }
     .search-results.visible { display: flex; }
     .search-result-item {
-      padding: 8px 9px;
-      border-radius: 8px;
+      padding: 8px 9px; border-radius: 8px;
       background: rgba(15, 23, 42, 0.55);
       border: 1px solid rgba(148, 163, 184, 0.3);
-      cursor: pointer;
-      font-size: 11px;
-      color: var(--text-inverse);
-      transition: background 0.15s;
+      cursor: pointer; font-size: 11px;
+      color: var(--text-inverse); transition: background 0.15s;
     }
     .search-result-item:hover { background: rgba(15, 23, 42, 0.85); }
     .search-result-num { font-weight: 700; color: var(--accent-gold); }
     .search-result-epig { font-weight: 500; display: block; margin-top: 2px; }
-    .search-result-ctx {
-      font-size: 10px;
-      color: rgba(226, 232, 240, 0.65);
-      display: block;
-      margin-top: 1px;
-    }
+    .search-result-ctx { font-size: 10px; color: rgba(226, 232, 240, 0.65); display: block; margin-top: 1px; }
     .search-highlight { background: rgba(201, 162, 39, 0.45); border-radius: 2px; padding: 0 1px; }
-    .search-empty {
-      font-size: 12px;
-      color: rgba(226, 232, 240, 0.6);
-      text-align: center;
-      padding: 20px 0;
-    }
-    .search-count {
-      font-size: 10px;
-      color: rgba(226, 232, 240, 0.5);
-      margin-bottom: 6px;
-      padding-left: 2px;
-    }
-
-    /* Sidebar tree */
-    .sidebar-scroll {
-      margin-top: 12px;
-      padding-right: 4px;
-      overflow-y: auto;
-      flex: 1;
-    }
+    .search-empty { font-size: 12px; color: rgba(226, 232, 240, 0.6); text-align: center; padding: 20px 0; }
+    .search-count { font-size: 10px; color: rgba(226, 232, 240, 0.5); margin-bottom: 6px; padding-left: 2px; }
+    .sidebar-scroll { margin-top: 12px; padding-right: 4px; overflow-y: auto; flex: 1; }
     .tree-group-title {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: rgba(226, 232, 240, 0.85);
-      margin-bottom: 8px;
+      font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: rgba(226, 232, 240, 0.85); margin-bottom: 8px;
     }
     .title-block {
-      border-radius: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.65);
-      margin-bottom: 8px;
+      border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.65); margin-bottom: 8px;
     }
     .title-head {
-      width: 100%;
-      padding: 8px 9px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 12px;
-      text-align: left;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      color: var(--text-inverse);
+      width: 100%; padding: 8px 9px; display: flex;
+      align-items: center; justify-content: space-between;
+      font-size: 12px; text-align: left; cursor: pointer;
+      border: none; background: transparent; color: var(--text-inverse);
     }
     .title-head-main { display: flex; flex-direction: column; }
     .title-kicker { font-size: 10px; color: rgba(226, 232, 240, 0.8); text-transform: uppercase; letter-spacing: 0.08em; }
@@ -171,67 +120,48 @@
     .chapter-list { display: none; border-top: 1px solid rgba(148, 163, 184, 0.45); padding: 4px 5px 6px; }
     .title-block.open .chapter-list { display: block; }
     .chapter-btn {
-      width: 100%;
-      padding: 6px 6px;
-      border-radius: 8px;
-      border: none;
-      background: transparent;
-      color: var(--text-inverse);
-      text-align: left;
-      font-size: 11px;
-      cursor: pointer;
+      width: 100%; padding: 6px 6px; border-radius: 8px;
+      border: none; background: transparent; color: var(--text-inverse);
+      text-align: left; font-size: 11px; cursor: pointer;
     }
     .chapter-btn:hover, .chapter-btn.active { background: rgba(15, 23, 42, 0.9); }
     .chapter-name { font-weight: 500; display: block; }
     .chapter-range { font-size: 10px; color: rgba(226, 232, 240, 0.7); display: block; }
 
-    /* ── Hamburger (mobile) ───────────────────────────────── */
+    /* ── Hamburger ───────────────────────────────────────── */
     .hamburger {
-      display: none;
-      background: none;
-      border: 1px solid var(--border-soft);
-      border-radius: 8px;
-      padding: 5px 8px;
-      font-size: 18px;
-      cursor: pointer;
-      color: var(--text-main);
-      line-height: 1;
+      display: none; background: none;
+      border: 1px solid var(--border-soft); border-radius: 8px;
+      padding: 5px 8px; font-size: 18px; cursor: pointer;
+      color: var(--text-main); line-height: 1;
     }
 
     /* ── Header ──────────────────────────────────────────── */
     .header {
-      grid-column: 2;
+      grid-column: 2; grid-row: 1;
       padding: 10px 18px;
       border-bottom: 1px solid var(--border-soft);
       background: rgba(247, 243, 234, 0.94);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px;
     }
     .breadcrumbs { font-size: 11px; color: var(--text-muted); }
     .breadcrumbs span { color: var(--accent-blue); font-weight: 600; }
     .header-actions { display: flex; gap: 8px; align-items: center; }
     .header-btn {
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border-soft);
-      background: var(--bg-panel);
-      color: var(--text-muted);
-      cursor: pointer;
+      font-size: 11px; padding: 6px 10px; border-radius: 999px;
+      border: 1px solid var(--border-soft); background: var(--bg-panel);
+      color: var(--text-muted); cursor: pointer;
     }
 
     /* ── Main / Reader ───────────────────────────────────── */
     .main {
-      grid-column: 2;
-      padding: 16px 18px;
-      overflow-y: auto;
+      grid-column: 2; grid-row: 2;
+      padding: 16px 18px; overflow-y: auto;
       background: radial-gradient(circle at top left, rgba(201, 162, 39, 0.12), transparent 60%), var(--bg);
     }
     .reader {
-      max-width: 860px;
-      margin: 0 auto;
+      max-width: 860px; margin: 0 auto;
       background: var(--bg-panel);
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-soft);
@@ -244,42 +174,32 @@
     .article-subtitle { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
     .article-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 10px; }
     .article-btn {
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border-soft);
-      background: #f9fafb;
-      color: var(--text-muted);
-      cursor: pointer;
+      font-size: 11px; padding: 6px 10px; border-radius: 999px;
+      border: 1px solid var(--border-soft); background: #f9fafb;
+      color: var(--text-muted); cursor: pointer;
     }
     .article-btn.primary { border-color: var(--accent-gold); background: var(--accent-gold-soft); color: #4b3410; }
     .article-body { font-size: 13px; line-height: 1.8; color: var(--text-main); margin-top: 4px; }
     .article-body p { margin-bottom: 8px; }
     .article-body ol { margin: 6px 0 8px 18px; }
     .article-body li { margin-bottom: 4px; }
-
-    /* Empty state */
+    .article-body p.tts-reading {
+      background: rgba(201, 162, 39, 0.18);
+      border-left: 3px solid var(--accent-gold);
+      padding-left: 8px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
     .article-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      padding: 24px 0;
-      color: var(--text-muted);
-      font-size: 13px;
-      text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; padding: 24px 0; color: var(--text-muted);
+      font-size: 13px; text-align: center;
     }
     .article-empty-icon { font-size: 32px; opacity: 0.4; }
     .article-empty p { max-width: 320px; line-height: 1.6; }
-
-    /* Loading state */
     .loading-state {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 40px 20px;
-      color: var(--text-muted);
-      font-size: 13px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 40px 20px; color: var(--text-muted); font-size: 13px;
     }
     .spinner {
       width: 18px; height: 18px;
@@ -289,49 +209,180 @@
       animation: spin 0.7s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .article-footer {
-      border-top: 1px solid #e5e7eb;
-      margin-top: 10px;
-      padding-top: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 11px;
-      color: var(--text-muted);
+      border-top: 1px solid #e5e7eb; margin-top: 10px; padding-top: 8px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 8px; font-size: 11px; color: var(--text-muted);
     }
     .pager { display: flex; gap: 6px; }
     .pager button {
-      font-size: 11px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid var(--border-soft);
-      background: #f9fafb;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
+      font-size: 11px; padding: 4px 9px; border-radius: 999px;
+      border: 1px solid var(--border-soft); background: #f9fafb;
+      cursor: pointer; transition: background 0.15s, border-color 0.15s;
     }
     .pager button:hover:not(:disabled) { background: var(--accent-gold-soft); border-color: var(--accent-gold); }
     .pager button:disabled { opacity: 0.35; cursor: default; }
+
+    /* ── Audio Player ─────────────────────────────────────── */
+    .audio-player {
+      grid-column: 2; grid-row: 3;
+      background: linear-gradient(135deg, #1a2d45, #243650);
+      border-top: 1px solid rgba(148,163,184,0.3);
+      padding: 10px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      box-shadow: 0 -4px 16px rgba(15,23,42,0.18);
+    }
+    .player-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .player-controls {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .player-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #f7f3ea;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, transform 0.1s;
+      flex-shrink: 0;
+    }
+    .player-btn:hover { background: rgba(255,255,255,0.2); }
+    .player-btn:active { transform: scale(0.92); }
+    .player-btn.play-btn {
+      width: 40px; height: 40px;
+      font-size: 17px;
+      background: var(--accent-gold);
+      color: #1a2d45;
+    }
+    .player-btn.play-btn:hover { background: #dbb835; }
+    .player-btn:disabled { opacity: 0.35; cursor: default; }
+    .player-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .player-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #f7f3ea;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .player-subtitle {
+      font-size: 10px;
+      color: rgba(247,243,234,0.6);
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .player-counter {
+      font-size: 10px;
+      color: rgba(247,243,234,0.5);
+      flex-shrink: 0;
+      text-align: right;
+    }
+    .player-bottom {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* Progress bar */
+    .player-progress {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .player-progress-fill {
+      height: 100%;
+      background: var(--accent-gold);
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.4s linear;
+    }
+    /* Speed control */
+    .player-speed-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .player-speed-label {
+      font-size: 10px;
+      color: rgba(247,243,234,0.55);
+    }
+    .player-speed {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 70px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.15);
+      outline: none;
+      cursor: pointer;
+    }
+    .player-speed::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      cursor: pointer;
+    }
+    .player-speed-val {
+      font-size: 10px;
+      color: var(--accent-gold);
+      min-width: 26px;
+      text-align: right;
+    }
+    /* Voice select */
+    .player-voice-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .player-voice-label {
+      font-size: 10px;
+      color: rgba(247,243,234,0.55);
+    }
+    .player-voice {
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 6px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.5);
+      color: #f7f3ea;
+      cursor: pointer;
+      max-width: 130px;
+    }
 
     /* ── Responsive ──────────────────────────────────────── */
     @media (max-width: 900px) {
       body {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
+        grid-template-rows: auto auto 1fr auto;
         overflow: auto;
         height: auto;
         min-height: 100vh;
       }
       .sidebar {
-        grid-row: 2;
-        grid-column: 1;
+        grid-row: 2; grid-column: 1;
         border-right: none;
         border-top: 1px solid rgba(148, 163, 184, 0.4);
-        max-height: 0;
-        padding: 0 18px;
-        overflow: hidden;
+        max-height: 0; padding: 0 18px; overflow: hidden;
         transition: max-height 0.3s ease, padding 0.3s ease;
       }
       .sidebar.open {
@@ -339,16 +390,13 @@
         padding: 18px 18px 16px;
         overflow-y: auto;
       }
-      .header {
-        grid-column: 1;
-        grid-row: 1;
-      }
-      .main {
-        grid-column: 1;
-        grid-row: 3;
-      }
+      .header { grid-column: 1; grid-row: 1; }
+      .main { grid-column: 1; grid-row: 3; }
+      .audio-player { grid-column: 1; grid-row: 4; }
       .hamburger { display: inline-flex; align-items: center; }
       .sidebar-logo { max-width: 140px; }
+      .player-voice-wrap { display: none; }
+      .player-bottom { flex-wrap: wrap; gap: 6px; }
     }
   </style>
 </head>
@@ -357,12 +405,7 @@
   <!-- ── SIDEBAR ── -->
   <aside class="sidebar" id="sidebar" aria-label="Índice del Código Penal">
     <header class="sidebar-header">
-      <img
-        class="sidebar-logo"
-        src="logocodehub.png"
-        alt="CodeHub logo"
-        onerror="this.style.display='none'"
-      />
+      <img class="sidebar-logo" src="logocodehub.png" alt="CodeHub logo" onerror="this.style.display='none'" />
       <div class="app-title">Código Penal</div>
       <div class="app-subtitle">Ley Nº 1160/1997 · República del Paraguay</div>
       <div class="search-box">
@@ -371,26 +414,18 @@
         <button class="search-clear" id="searchClear" type="button" title="Limpiar búsqueda">✕</button>
       </div>
     </header>
-
-    <!-- Search results (shown when query active) -->
     <div class="search-results" id="searchResults" aria-live="polite"></div>
-
-    <!-- Normal tree (hidden when searching) -->
     <div class="sidebar-scroll" id="sidebarTree">
       <div class="tree-group-title">Estructura</div>
-      <div class="loading-state">
-        <div class="spinner"></div> Cargando estructura…
-      </div>
+      <div class="loading-state"><div class="spinner"></div> Cargando estructura…</div>
     </div>
   </aside>
 
   <!-- ── HEADER ── -->
   <header class="header">
-    <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+    <div style="display:flex;align-items:center;gap:10px;min-width:0;">
       <button class="hamburger" id="hamburger" type="button" aria-label="Mostrar/ocultar índice">☰</button>
-      <div class="breadcrumbs" id="breadcrumbs">
-        <span>Seleccioná un artículo del índice</span>
-      </div>
+      <div class="breadcrumbs" id="breadcrumbs"><span>Seleccioná un artículo del índice</span></div>
     </div>
     <div class="header-actions">
       <button class="header-btn" id="btnCopyText" type="button">Copiar texto</button>
@@ -406,13 +441,11 @@
         <p class="article-subtitle" id="articleMeta">Seleccioná un capítulo del índice lateral para comenzar.</p>
       </header>
       <div class="article-toolbar">
-        <button class="article-btn primary" id="btnTTS" type="button">🔊 Escuchar</button>
+        <button class="article-btn primary" id="btnTTS" type="button">🔊 Escuchar desde aquí</button>
         <button class="article-btn" id="btnCopyBtn" type="button">📋 Copiar texto</button>
       </div>
       <div class="article-body" id="articleBody">
-        <div class="loading-state">
-          <div class="spinner"></div> Cargando datos del Código Penal…
-        </div>
+        <div class="loading-state"><div class="spinner"></div> Cargando datos del Código Penal…</div>
       </div>
       <footer class="article-footer">
         <div id="articleSource">Fuente: CSJ - IIJ, edición digital · actualizado 2025-05</div>
@@ -424,75 +457,127 @@
     </section>
   </main>
 
+  <!-- ── AUDIO PLAYER ── -->
+  <div class="audio-player" id="audioPlayer" aria-label="Reproductor de lectura">
+    <div class="player-top">
+      <div class="player-controls">
+        <button class="player-btn" id="playerSkipBack" title="-5 artículos" disabled>⏮</button>
+        <button class="player-btn" id="playerPrev" title="Artículo anterior" disabled>⏪</button>
+        <button class="player-btn play-btn" id="playerPlay" title="Reproducir / Pausar">▶</button>
+        <button class="player-btn" id="playerNext" title="Artículo siguiente" disabled>⏩</button>
+        <button class="player-btn" id="playerSkipFwd" title="+5 artículos" disabled>⏭</button>
+        <button class="player-btn" id="playerStop" title="Detener" disabled>⏹</button>
+      </div>
+      <div class="player-info">
+        <div class="player-title" id="playerTitle">Sin reproducción activa</div>
+        <div class="player-subtitle" id="playerSubtitle">Presioná ▶ o "Escuchar desde aquí" para comenzar</div>
+      </div>
+      <div class="player-counter" id="playerCounter"></div>
+    </div>
+    <div class="player-bottom">
+      <div class="player-progress">
+        <div class="player-progress-fill" id="playerProgressFill"></div>
+      </div>
+      <div class="player-speed-wrap">
+        <span class="player-speed-label">Vel.</span>
+        <input class="player-speed" type="range" id="playerSpeed" min="0.5" max="2" step="0.1" value="1" />
+        <span class="player-speed-val" id="playerSpeedVal">1×</span>
+      </div>
+      <div class="player-voice-wrap">
+        <span class="player-voice-label">Voz</span>
+        <select class="player-voice" id="playerVoice"></select>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ─── Estado global
+    // ─── Estado global ───────────────────────────────────────
     let DATA = null;
     let FLAT = [];
     let currentIdx = 0;
 
-    // ─── Referencias DOM
-    const sidebar       = document.getElementById('sidebar');
-    const hamburger     = document.getElementById('hamburger');
-    const sidebarTree   = document.getElementById('sidebarTree');
-    const searchInput   = document.getElementById('searchInput');
-    const searchClear   = document.getElementById('searchClear');
-    const searchResults = document.getElementById('searchResults');
-    const breadcrumbsEl = document.getElementById('breadcrumbs');
-    const articleNumber = document.getElementById('articleNumber');
-    const articleTitle  = document.getElementById('articleTitle');
-    const articleMeta   = document.getElementById('articleMeta');
-    const articleBody   = document.getElementById('articleBody');
-    const btnPrev       = document.getElementById('btnPrev');
-    const btnNext       = document.getElementById('btnNext');
-    const btnTTS        = document.getElementById('btnTTS');
-    const btnCopyBtn    = document.getElementById('btnCopyBtn');
-    const btnCopyText   = document.getElementById('btnCopyText');
+    // ─── TTS state ───────────────────────────────────────────
+    let ttsPlaying   = false;
+    let ttsPaused    = false;
+    let ttsStartIdx  = 0;   // índice desde donde arrancó la reproducción continua
+    let ttsReadIdx   = 0;   // índice del artículo que se está leyendo ahora
+    let voices       = [];
 
-    // ─── Hamburger toggle (mobile)
-    hamburger.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-    });
+    // ─── DOM refs ────────────────────────────────────────────
+    const sidebar        = document.getElementById('sidebar');
+    const hamburger      = document.getElementById('hamburger');
+    const sidebarTree    = document.getElementById('sidebarTree');
+    const searchInput    = document.getElementById('searchInput');
+    const searchClear    = document.getElementById('searchClear');
+    const searchResults  = document.getElementById('searchResults');
+    const breadcrumbsEl  = document.getElementById('breadcrumbs');
+    const articleNumber  = document.getElementById('articleNumber');
+    const articleTitle   = document.getElementById('articleTitle');
+    const articleMeta    = document.getElementById('articleMeta');
+    const articleBody    = document.getElementById('articleBody');
+    const btnPrev        = document.getElementById('btnPrev');
+    const btnNext        = document.getElementById('btnNext');
+    const btnTTS         = document.getElementById('btnTTS');
+    const btnCopyBtn     = document.getElementById('btnCopyBtn');
+    const btnCopyText    = document.getElementById('btnCopyText');
+    // player
+    const playerPlay     = document.getElementById('playerPlay');
+    const playerStop     = document.getElementById('playerStop');
+    const playerPrev     = document.getElementById('playerPrev');
+    const playerNext     = document.getElementById('playerNext');
+    const playerSkipBack = document.getElementById('playerSkipBack');
+    const playerSkipFwd  = document.getElementById('playerSkipFwd');
+    const playerTitle    = document.getElementById('playerTitle');
+    const playerSubtitle = document.getElementById('playerSubtitle');
+    const playerCounter  = document.getElementById('playerCounter');
+    const playerProgressFill = document.getElementById('playerProgressFill');
+    const playerSpeed    = document.getElementById('playerSpeed');
+    const playerSpeedVal = document.getElementById('playerSpeedVal');
+    const playerVoice    = document.getElementById('playerVoice');
 
-    // ─── Utilidades
+    // ─── Hamburger ───────────────────────────────────────────
+    hamburger.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+    // ─── Utilidades ──────────────────────────────────────────
     function normalize(str) {
-      return (str || '').toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
-
     function highlight(str, query) {
       if (!query) return str;
       const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
       return str.replace(re, '<mark class="search-highlight">$1</mark>');
     }
-
-    // ─── Construir lista plana con validación
     function buildFlat(data) {
       const flat = [];
-      (data.libros || []).forEach(libro => {
-        (libro.titulos || []).forEach(titulo => {
-          (titulo.capitulos || []).forEach(capitulo => {
-            (capitulo.articulos || []).forEach(articulo => {
-              flat.push({ libro, titulo, capitulo, articulo });
-            });
-          });
-        });
-      });
+      (data.libros || []).forEach(libro =>
+        (libro.titulos || []).forEach(titulo =>
+          (titulo.capitulos || []).forEach(capitulo =>
+            (capitulo.articulos || []).forEach(articulo =>
+              flat.push({ libro, titulo, capitulo, articulo })
+            )
+          )
+        )
+      );
       return flat;
     }
-
-    // ─── Deep linking — hash
     function getHashArtNum() {
       const h = window.location.hash.replace('#art-', '').trim();
       return h ? parseInt(h, 10) : null;
     }
-
     function setHashFromIdx(idx) {
       if (!FLAT.length) return;
-      const { articulo } = FLAT[idx];
-      history.replaceState(null, '', '#art-' + articulo.numero);
+      history.replaceState(null, '', '#art-' + FLAT[idx].articulo.numero);
     }
 
-    // ─── Cargar JSON externo
+    // ─── localStorage: guardar / restaurar posición ───────────
+    function savePosition(idx) {
+      try { localStorage.setItem('cp_lastIdx', idx); } catch(e) {}
+    }
+    function loadPosition() {
+      try { return parseInt(localStorage.getItem('cp_lastIdx'), 10) || 0; } catch(e) { return 0; }
+    }
+
+    // ─── Cargar JSON ─────────────────────────────────────────
     const jsonUrl = new URL('codigo_penal_completo.json', window.location.href).href;
 
     async function loadData() {
@@ -500,23 +585,59 @@
         const res = await fetch(jsonUrl, { cache: 'no-store' });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         DATA = await res.json();
-        if (!DATA || !Array.isArray(DATA.libros)) throw new Error('Estructura JSON inválida: falta "libros".');
+        if (!DATA || !Array.isArray(DATA.libros)) throw new Error('Estructura JSON inválida.');
         FLAT = buildFlat(DATA);
         renderSidebar();
+        initVoices();
+        // Prioridad: hash > localStorage
         const hashNum = getHashArtNum();
-        let startIdx = 0;
+        let startIdx = loadPosition();
         if (hashNum !== null) {
           const found = FLAT.findIndex(e => e.articulo.numero === hashNum);
           if (found !== -1) startIdx = found;
         }
+        startIdx = Math.max(0, Math.min(startIdx, FLAT.length - 1));
         showArticleByIdx(startIdx);
+        updatePlayerControls();
       } catch (err) {
         sidebarTree.innerHTML = `<div class="search-empty">⚠️ Error al cargar el JSON.<br><small>${err.message}</small></div>`;
-        articleBody.innerHTML = `<div class="article-empty"><div class="article-empty-icon">⚠️</div><p>No se pudo cargar <code>codigo_penal_completo.json</code> desde <code>${jsonUrl}</code>. Verificá que GitHub Pages esté publicado y que ambos archivos estén en la misma carpeta del sitio.</p></div>`;
+        articleBody.innerHTML = `<div class="article-empty"><div class="article-empty-icon">⚠️</div><p>No se pudo cargar <code>codigo_penal_completo.json</code> desde <code>${jsonUrl}</code>.</p></div>`;
       }
     }
 
-    // ─── Renderizar sidebar
+    // ─── Voces TTS ───────────────────────────────────────────
+    function initVoices() {
+      function populate() {
+        voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('es'));
+        if (!voices.length) voices = speechSynthesis.getVoices();
+        playerVoice.innerHTML = '';
+        voices.forEach((v, i) => {
+          const opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = v.name + (v.lang ? ` (${v.lang})` : '');
+          playerVoice.appendChild(opt);
+        });
+        // intentar seleccionar voz paraguaya primero
+        const pyIdx = voices.findIndex(v => v.lang.startsWith('es-PY'));
+        const esIdx = voices.findIndex(v => v.lang.startsWith('es'));
+        playerVoice.selectedIndex = pyIdx >= 0 ? pyIdx : (esIdx >= 0 ? esIdx : 0);
+      }
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populate;
+      }
+      populate();
+    }
+
+    function getSelectedVoice() {
+      return voices[parseInt(playerVoice.value, 10)] || null;
+    }
+
+    // ─── Velocidad ───────────────────────────────────────────
+    playerSpeed.addEventListener('input', () => {
+      playerSpeedVal.textContent = parseFloat(playerSpeed.value).toFixed(1) + '×';
+    });
+
+    // ─── Renderizar sidebar ───────────────────────────────────
     function renderSidebar() {
       sidebarTree.innerHTML = '';
       DATA.libros.forEach(libro => {
@@ -524,11 +645,9 @@
         groupTitle.className = 'tree-group-title';
         groupTitle.textContent = libro.nombre;
         sidebarTree.appendChild(groupTitle);
-
         libro.titulos.forEach(titulo => {
           const block = document.createElement('section');
           block.className = 'title-block';
-
           const head = document.createElement('button');
           head.className = 'title-head';
           head.type = 'button';
@@ -538,23 +657,17 @@
               <span class="title-name">${titulo.nombre}</span>
               <span class="title-range">Arts. ${titulo.rangoArticulos}</span>
             </div>
-            <span class="title-chevron">›</span>
-          `;
+            <span class="title-chevron">›</span>`;
           head.addEventListener('click', () => block.classList.toggle('open'));
           block.appendChild(head);
-
           const chList = document.createElement('div');
           chList.className = 'chapter-list';
-
           titulo.capitulos.forEach(cap => {
             const btn = document.createElement('button');
             btn.className = 'chapter-btn';
             btn.type = 'button';
             btn.dataset.capId = cap.id;
-            btn.innerHTML = `
-              <span class="chapter-name">Cap. ${cap.numero} — ${cap.nombre}</span>
-              <span class="chapter-range">Arts. ${cap.rangoArticulos}</span>
-            `;
+            btn.innerHTML = `<span class="chapter-name">Cap. ${cap.numero} — ${cap.nombre}</span><span class="chapter-range">Arts. ${cap.rangoArticulos}</span>`;
             btn.addEventListener('click', () => {
               setActiveChapterBtn(btn);
               const flatIdx = FLAT.findIndex(e => e.capitulo.id === cap.id);
@@ -563,7 +676,6 @@
             });
             chList.appendChild(btn);
           });
-
           block.appendChild(chList);
           sidebarTree.appendChild(block);
         });
@@ -575,48 +687,38 @@
       if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // ─── Mostrar artículo por índice en FLAT
-    function showArticleByIdx(idx) {
+    // ─── Mostrar artículo ────────────────────────────────────
+    function showArticleByIdx(idx, fromPlayer) {
       if (!FLAT.length) return;
       idx = Math.max(0, Math.min(idx, FLAT.length - 1));
       currentIdx = idx;
-
+      savePosition(idx);
       const { libro, titulo, capitulo, articulo } = FLAT[idx];
-
       setHashFromIdx(idx);
-
       breadcrumbsEl.innerHTML = `${libro.nombre} · Tít. ${titulo.numero} · Cap. ${capitulo.numero} · <span>Art. ${articulo.numero}</span>`;
-
       articleNumber.textContent = `Artículo ${articulo.numero}`;
       articleTitle.textContent  = articulo.epigrafe || `Artículo ${articulo.numero}`;
       articleMeta.textContent   = `Título ${titulo.numero} — ${titulo.nombre} · Capítulo ${capitulo.numero} — ${capitulo.nombre}`;
-
       const textos = articulo.texto || [];
       if (textos.length === 0) {
-        articleBody.innerHTML = `
-          <div class="article-empty">
-            <div class="article-empty-icon">📄</div>
-            <p>El texto de este artículo aún no ha sido cargado en el JSON. Podés añadirlo en <code>codigo_penal_completo.json</code> bajo <code>"texto": [...]</code>.</p>
-          </div>`;
+        articleBody.innerHTML = `<div class="article-empty"><div class="article-empty-icon">📄</div><p>El texto de este artículo aún no ha sido cargado en el JSON.</p></div>`;
       } else {
         articleBody.innerHTML = textos.map(p => `<p>${p}</p>`).join('');
       }
-
       btnPrev.disabled = idx === 0;
       btnNext.disabled = idx === FLAT.length - 1;
-
       const capBtn = document.querySelector(`.chapter-btn[data-cap-id="${capitulo.id}"]`);
       setActiveChapterBtn(capBtn);
       if (capBtn) {
         const block = capBtn.closest('.title-block');
         if (block) block.classList.add('open');
+        if (!fromPlayer) capBtn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       }
     }
 
-    // ─── Paginación
+    // ─── Paginación manual ───────────────────────────────────
     btnPrev.addEventListener('click', () => showArticleByIdx(currentIdx - 1));
     btnNext.addEventListener('click', () => showArticleByIdx(currentIdx + 1));
-
     window.addEventListener('hashchange', () => {
       const hashNum = getHashArtNum();
       if (hashNum !== null && FLAT.length) {
@@ -625,96 +727,179 @@
       }
     });
 
-    // ─── Buscador
-    let searchDebounce = null;
-
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.trim();
-      searchClear.classList.toggle('visible', q.length > 0);
-      clearTimeout(searchDebounce);
-      searchDebounce = setTimeout(() => runSearch(q), 200);
-    });
-
-    searchClear.addEventListener('click', () => {
-      searchInput.value = '';
-      searchClear.classList.remove('visible');
-      hideSearchResults();
-      searchInput.focus();
-    });
-
-    function runSearch(rawQuery) {
-      if (!rawQuery || !FLAT.length) {
-        hideSearchResults();
+    // ─── TTS core ────────────────────────────────────────────
+    function speakArticle(idx) {
+      if (!window.speechSynthesis) return;
+      speechSynthesis.cancel();
+      if (idx >= FLAT.length) {
+        ttsStop();
         return;
       }
-      const q = normalize(rawQuery);
-      const isNumeric = /^\d+$/.test(rawQuery.trim());
-      const matches = FLAT.filter(({ articulo }) => {
-        if (isNumeric) return String(articulo.numero) === rawQuery.trim();
-        const inEpigrafe      = normalize(articulo.epigrafe).includes(q);
-        const inTexto         = (articulo.texto || []).some(t => normalize(t).includes(q));
-        const inPalabrasClave = (articulo.palabrasClave || []).some(p => normalize(p).includes(q));
-        return inEpigrafe || inTexto || inPalabrasClave;
-      });
-      showSearchResults(matches, rawQuery);
-    }
-
-    function showSearchResults(matches, rawQuery) {
-      sidebarTree.style.display = 'none';
-      searchResults.classList.add('visible');
-      searchResults.innerHTML = '';
-
-      if (matches.length === 0) {
-        searchResults.innerHTML = `<div class="search-empty">Sin resultados para "<strong>${rawQuery}</strong>"</div>`;
+      ttsReadIdx = idx;
+      const { articulo } = FLAT[idx];
+      const textos = articulo.texto || [];
+      // Navegar al artículo que se está leyendo
+      showArticleByIdx(idx, true);
+      // Highlight del primer párrafo
+      const pEls = articleBody.querySelectorAll('p');
+      pEls.forEach(p => p.classList.remove('tts-reading'));
+      if (pEls.length) pEls[0].classList.add('tts-reading');
+      // Actualizar player
+      updatePlayerInfo(idx);
+      if (!textos.length) {
+        // artículo sin texto: saltar al siguiente
+        setTimeout(() => { if (ttsPlaying) speakArticle(idx + 1); }, 300);
         return;
       }
-
-      const count = document.createElement('div');
-      count.className = 'search-count';
-      count.textContent = `${matches.length} resultado${matches.length !== 1 ? 's' : ''}`;
-      searchResults.appendChild(count);
-
-      matches.forEach(({ articulo, titulo, capitulo }) => {
-        const flatIdx = FLAT.findIndex(e => e.articulo.numero === articulo.numero && e.capitulo.id === capitulo.id);
-        const item = document.createElement('div');
-        item.className = 'search-result-item';
-        item.setAttribute('role', 'button');
-        item.setAttribute('tabindex', '0');
-
-        let snippet = '';
-        const q = normalize(rawQuery);
-        const matchedParr = (articulo.texto || []).find(t => normalize(t).includes(q));
-        if (matchedParr) {
-          const start = Math.max(0, normalize(matchedParr).indexOf(q) - 40);
-          snippet = (start > 0 ? '…' : '') + matchedParr.slice(start, start + 100) + (matchedParr.length > start + 100 ? '…' : '');
-        }
-
-        item.innerHTML = `
-          <span class="search-result-num">Art. ${articulo.numero}</span>
-          <span class="search-result-epig">${highlight(articulo.epigrafe || '(sin epígrafe)', rawQuery)}</span>
-          <span class="search-result-ctx">${highlight(snippet, rawQuery) || `Tít. ${titulo.numero} · Cap. ${capitulo.numero}`}</span>
-        `;
-
-        const go = () => {
-          showArticleByIdx(flatIdx);
-          searchInput.value = '';
-          searchClear.classList.remove('visible');
-          hideSearchResults();
-          if (window.innerWidth <= 900) sidebar.classList.remove('open');
-        };
-        item.addEventListener('click', go);
-        item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') go(); });
-        searchResults.appendChild(item);
-      });
+      const full = textos.join(' ');
+      const utt = new SpeechSynthesisUtterance(full);
+      utt.rate  = parseFloat(playerSpeed.value);
+      utt.pitch = 1;
+      const voice = getSelectedVoice();
+      if (voice) utt.voice = voice;
+      else utt.lang = 'es';
+      utt.onend = () => {
+        if (!ttsPlaying) return;
+        // Avanzar al siguiente artículo automáticamente
+        speakArticle(idx + 1);
+      };
+      utt.onerror = (e) => {
+        if (e.error === 'interrupted' || e.error === 'canceled') return;
+        if (ttsPlaying) speakArticle(idx + 1);
+      };
+      speechSynthesis.speak(utt);
     }
 
-    function hideSearchResults() {
-      searchResults.classList.remove('visible');
-      searchResults.innerHTML = '';
-      sidebarTree.style.display = '';
+    function ttsPlay(startFromIdx) {
+      if (!window.speechSynthesis) {
+        alert('Tu navegador no soporta Text-to-Speech.');
+        return;
+      }
+      ttsPlaying = true;
+      ttsPaused  = false;
+      ttsStartIdx = startFromIdx !== undefined ? startFromIdx : currentIdx;
+      playerPlay.textContent = '⏸';
+      playerPlay.title = 'Pausar';
+      playerStop.disabled = false;
+      playerPrev.disabled = false;
+      playerNext.disabled = false;
+      playerSkipBack.disabled = false;
+      playerSkipFwd.disabled = false;
+      speakArticle(ttsStartIdx);
     }
 
-    // ─── Copiar texto
+    function ttsPause() {
+      if (!window.speechSynthesis) return;
+      if (speechSynthesis.speaking && !speechSynthesis.paused) {
+        speechSynthesis.pause();
+        ttsPaused = true;
+        playerPlay.textContent = '▶';
+        playerPlay.title = 'Reanudar';
+      }
+    }
+
+    function ttsResume() {
+      if (!window.speechSynthesis) return;
+      if (speechSynthesis.paused) {
+        speechSynthesis.resume();
+        ttsPaused = false;
+        playerPlay.textContent = '⏸';
+        playerPlay.title = 'Pausar';
+      }
+    }
+
+    function ttsStop() {
+      speechSynthesis.cancel();
+      ttsPlaying = false;
+      ttsPaused  = false;
+      playerPlay.textContent = '▶';
+      playerPlay.title = 'Reproducir';
+      playerStop.disabled = true;
+      playerPrev.disabled = true;
+      playerNext.disabled = true;
+      playerSkipBack.disabled = true;
+      playerSkipFwd.disabled = true;
+      playerProgressFill.style.width = '0%';
+      playerTitle.textContent = 'Sin reproducción activa';
+      playerSubtitle.textContent = 'Presioná ▶ o "Escuchar desde aquí" para comenzar';
+      playerCounter.textContent = '';
+      // quitar highlight
+      document.querySelectorAll('.tts-reading').forEach(p => p.classList.remove('tts-reading'));
+    }
+
+    function updatePlayerInfo(idx) {
+      if (!FLAT.length) return;
+      const { articulo, titulo, capitulo } = FLAT[idx];
+      playerTitle.textContent = `Art. ${articulo.numero}${articulo.epigrafe ? ' — ' + articulo.epigrafe : ''}`;
+      playerSubtitle.textContent = `Tít. ${titulo.numero} · Cap. ${capitulo.numero} — ${capitulo.nombre}`;
+      playerCounter.textContent = `${idx + 1} / ${FLAT.length}`;
+      const pct = FLAT.length > 1 ? (idx / (FLAT.length - 1)) * 100 : 100;
+      playerProgressFill.style.width = pct.toFixed(1) + '%';
+    }
+
+    function updatePlayerControls() {
+      // solo activa botones de salto si hay reproducción
+      const active = ttsPlaying;
+      playerStop.disabled = !active;
+      playerPrev.disabled = !active;
+      playerNext.disabled = !active;
+      playerSkipBack.disabled = !active;
+      playerSkipFwd.disabled = !active;
+    }
+
+    // ─── Player events ───────────────────────────────────────
+    playerPlay.addEventListener('click', () => {
+      if (!window.speechSynthesis) { alert('Tu navegador no soporta Text-to-Speech.'); return; }
+      if (!ttsPlaying) {
+        ttsPlay(currentIdx);
+      } else if (ttsPaused) {
+        ttsResume();
+      } else {
+        ttsPause();
+      }
+    });
+
+    playerStop.addEventListener('click', () => ttsStop());
+
+    playerPrev.addEventListener('click', () => {
+      if (!ttsPlaying) return;
+      const newIdx = Math.max(0, ttsReadIdx - 1);
+      speakArticle(newIdx);
+    });
+    playerNext.addEventListener('click', () => {
+      if (!ttsPlaying) return;
+      const newIdx = Math.min(FLAT.length - 1, ttsReadIdx + 1);
+      speakArticle(newIdx);
+    });
+    playerSkipBack.addEventListener('click', () => {
+      if (!ttsPlaying) return;
+      speakArticle(Math.max(0, ttsReadIdx - 5));
+    });
+    playerSkipFwd.addEventListener('click', () => {
+      if (!ttsPlaying) return;
+      speakArticle(Math.min(FLAT.length - 1, ttsReadIdx + 5));
+    });
+
+    // Botón "Escuchar desde aquí" en el toolbar del artículo
+    btnTTS.addEventListener('click', () => {
+      if (ttsPlaying) {
+        ttsStop();
+        btnTTS.textContent = '🔊 Escuchar desde aquí';
+      } else {
+        ttsPlay(currentIdx);
+        btnTTS.textContent = '⏹ Detener';
+      }
+    });
+
+    // Sincronizar texto del botón toolbar con estado del player
+    function syncToolbarBtn() {
+      btnTTS.textContent = ttsPlaying ? '⏹ Detener' : '🔊 Escuchar desde aquí';
+    }
+    // Se llama en cada cambio de estado
+    const origStop = ttsStop;
+    // (ya integrado arriba directamente)
+
+    // ─── Copiar texto ────────────────────────────────────────
     function copyCurrentArticle() {
       if (!FLAT.length) return;
       const { articulo } = FLAT[currentIdx];
@@ -730,44 +915,85 @@
           btnCopyBtn.textContent = '📋 Copiar texto';
           btnCopyText.textContent = 'Copiar texto';
         }, 2000);
-      }).catch(() => {
-        alert('No se pudo copiar al portapapeles. Verificá los permisos del navegador.');
-      });
+      }).catch(() => alert('No se pudo copiar al portapapeles.'));
     }
     btnCopyBtn.addEventListener('click', copyCurrentArticle);
     btnCopyText.addEventListener('click', copyCurrentArticle);
 
-    // ─── Text-to-Speech con fallback de voz
-    let ttsUtterance = null;
-    btnTTS.addEventListener('click', () => {
-      if (!window.speechSynthesis) {
-        alert('Tu navegador no soporta Text-to-Speech.');
-        return;
-      }
-      if (speechSynthesis.speaking) {
-        speechSynthesis.cancel();
-        btnTTS.textContent = '🔊 Escuchar';
-        return;
-      }
-      const { articulo } = FLAT[currentIdx];
-      const textos = articulo.texto || [];
-      if (!textos.length) return;
-      const full = textos.join(' ');
-      ttsUtterance = new SpeechSynthesisUtterance(full);
-      const voices = speechSynthesis.getVoices();
-      const hasParaguay = voices.some(v => v.lang.startsWith('es-PY'));
-      ttsUtterance.lang = hasParaguay ? 'es-PY' : 'es';
-      ttsUtterance.onend = () => { btnTTS.textContent = '🔊 Escuchar'; };
-      ttsUtterance.onerror = () => { btnTTS.textContent = '🔊 Escuchar'; };
-      speechSynthesis.speak(ttsUtterance);
-      btnTTS.textContent = '⏹ Detener';
+    // ─── Buscador ────────────────────────────────────────────
+    let searchDebounce = null;
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim();
+      searchClear.classList.toggle('visible', q.length > 0);
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => runSearch(q), 200);
     });
-
-    if (window.speechSynthesis && speechSynthesis.onvoiceschanged !== undefined) {
-      speechSynthesis.onvoiceschanged = () => {};
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      searchClear.classList.remove('visible');
+      hideSearchResults();
+      searchInput.focus();
+    });
+    function runSearch(rawQuery) {
+      if (!rawQuery || !FLAT.length) { hideSearchResults(); return; }
+      const q = normalize(rawQuery);
+      const isNumeric = /^\d+$/.test(rawQuery.trim());
+      const matches = FLAT.filter(({ articulo }) => {
+        if (isNumeric) return String(articulo.numero) === rawQuery.trim();
+        return normalize(articulo.epigrafe).includes(q) ||
+               (articulo.texto || []).some(t => normalize(t).includes(q)) ||
+               (articulo.palabrasClave || []).some(p => normalize(p).includes(q));
+      });
+      showSearchResults(matches, rawQuery);
+    }
+    function showSearchResults(matches, rawQuery) {
+      sidebarTree.style.display = 'none';
+      searchResults.classList.add('visible');
+      searchResults.innerHTML = '';
+      if (matches.length === 0) {
+        searchResults.innerHTML = `<div class="search-empty">Sin resultados para "<strong>${rawQuery}</strong>"</div>`;
+        return;
+      }
+      const count = document.createElement('div');
+      count.className = 'search-count';
+      count.textContent = `${matches.length} resultado${matches.length !== 1 ? 's' : ''}`;
+      searchResults.appendChild(count);
+      matches.forEach(({ articulo, titulo, capitulo }) => {
+        const flatIdx = FLAT.findIndex(e => e.articulo.numero === articulo.numero && e.capitulo.id === capitulo.id);
+        const item = document.createElement('div');
+        item.className = 'search-result-item';
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+        const q = normalize(rawQuery);
+        const matchedParr = (articulo.texto || []).find(t => normalize(t).includes(q));
+        let snippet = '';
+        if (matchedParr) {
+          const start = Math.max(0, normalize(matchedParr).indexOf(q) - 40);
+          snippet = (start > 0 ? '…' : '') + matchedParr.slice(start, start + 100) + (matchedParr.length > start + 100 ? '…' : '');
+        }
+        item.innerHTML = `
+          <span class="search-result-num">Art. ${articulo.numero}</span>
+          <span class="search-result-epig">${highlight(articulo.epigrafe || '(sin epígrafe)', rawQuery)}</span>
+          <span class="search-result-ctx">${highlight(snippet, rawQuery) || `Tít. ${titulo.numero} · Cap. ${capitulo.numero}`}</span>`;
+        const go = () => {
+          showArticleByIdx(flatIdx);
+          searchInput.value = '';
+          searchClear.classList.remove('visible');
+          hideSearchResults();
+          if (window.innerWidth <= 900) sidebar.classList.remove('open');
+        };
+        item.addEventListener('click', go);
+        item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') go(); });
+        searchResults.appendChild(item);
+      });
+    }
+    function hideSearchResults() {
+      searchResults.classList.remove('visible');
+      searchResults.innerHTML = '';
+      sidebarTree.style.display = '';
     }
 
-    // ─── Init
+    // ─── Init ─────────────────────────────────────────────────
     loadData();
   </script>
 </body>
