@@ -46,7 +46,10 @@
       overflow: hidden;
       transition: transform 0.25s ease;
     }
-    .sidebar-header { margin-bottom: 14px; }
+    .sidebar-header {
+      margin-bottom: 14px;
+      text-align: center;
+    }
     .sidebar-logo {
       display: block;
       width: 100%;
@@ -57,7 +60,7 @@
     }
     .app-title { font-size: 18px; font-weight: 600; letter-spacing: 0.03em; }
     .app-subtitle { font-size: 11px; color: rgba(248, 250, 252, 0.75); margin-top: 3px; }
-    .search-box { margin-top: 12px; position: relative; }
+    .search-box { margin-top: 12px; position: relative; text-align: left; }
     .search-input {
       width: 100%;
       padding: 8px 32px 8px 10px;
@@ -422,12 +425,12 @@
   </main>
 
   <script>
-    // ─── Estado global ───────────────────────────────────────
+    // ─── Estado global
     let DATA = null;
     let FLAT = [];
     let currentIdx = 0;
 
-    // ─── Referencias DOM ─────────────────────────────────────
+    // ─── Referencias DOM
     const sidebar       = document.getElementById('sidebar');
     const hamburger     = document.getElementById('hamburger');
     const sidebarTree   = document.getElementById('sidebarTree');
@@ -445,12 +448,12 @@
     const btnCopyBtn    = document.getElementById('btnCopyBtn');
     const btnCopyText   = document.getElementById('btnCopyText');
 
-    // ─── Hamburger toggle (mobile) ────────────────────────────
+    // ─── Hamburger toggle (mobile)
     hamburger.addEventListener('click', () => {
       sidebar.classList.toggle('open');
     });
 
-    // ─── Utilidades ──────────────────────────────────────────
+    // ─── Utilidades
     function normalize(str) {
       return (str || '').toLowerCase()
         .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -462,7 +465,7 @@
       return str.replace(re, '<mark class="search-highlight">$1</mark>');
     }
 
-    // ─── Construir lista plana con validación ─────────────────
+    // ─── Construir lista plana con validación
     function buildFlat(data) {
       const flat = [];
       (data.libros || []).forEach(libro => {
@@ -477,7 +480,7 @@
       return flat;
     }
 
-    // ─── Deep linking — hash ──────────────────────────────────
+    // ─── Deep linking — hash
     function getHashArtNum() {
       const h = window.location.hash.replace('#art-', '').trim();
       return h ? parseInt(h, 10) : null;
@@ -489,7 +492,7 @@
       history.replaceState(null, '', '#art-' + articulo.numero);
     }
 
-    // ─── Cargar JSON externo ─────────────────────────────────
+    // ─── Cargar JSON externo
     const jsonUrl = new URL('codigo_penal_completo.json', window.location.href).href;
 
     async function loadData() {
@@ -500,7 +503,6 @@
         if (!DATA || !Array.isArray(DATA.libros)) throw new Error('Estructura JSON inválida: falta "libros".');
         FLAT = buildFlat(DATA);
         renderSidebar();
-
         const hashNum = getHashArtNum();
         let startIdx = 0;
         if (hashNum !== null) {
@@ -514,7 +516,7 @@
       }
     }
 
-    // ─── Renderizar sidebar ───────────────────────────────────
+    // ─── Renderizar sidebar
     function renderSidebar() {
       sidebarTree.innerHTML = '';
       DATA.libros.forEach(libro => {
@@ -573,7 +575,7 @@
       if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // ─── Mostrar artículo por índice en FLAT ─────────────────
+    // ─── Mostrar artículo por índice en FLAT
     function showArticleByIdx(idx) {
       if (!FLAT.length) return;
       idx = Math.max(0, Math.min(idx, FLAT.length - 1));
@@ -611,7 +613,7 @@
       }
     }
 
-    // ─── Paginación ───────────────────────────────────────────
+    // ─── Paginación
     btnPrev.addEventListener('click', () => showArticleByIdx(currentIdx - 1));
     btnNext.addEventListener('click', () => showArticleByIdx(currentIdx + 1));
 
@@ -623,7 +625,7 @@
       }
     });
 
-    // ─── Buscador ─────────────────────────────────────────────
+    // ─── Buscador
     let searchDebounce = null;
 
     searchInput.addEventListener('input', () => {
@@ -645,20 +647,15 @@
         hideSearchResults();
         return;
       }
-
       const q = normalize(rawQuery);
       const isNumeric = /^\d+$/.test(rawQuery.trim());
-
       const matches = FLAT.filter(({ articulo }) => {
-        if (isNumeric) {
-          return String(articulo.numero) === rawQuery.trim();
-        }
+        if (isNumeric) return String(articulo.numero) === rawQuery.trim();
         const inEpigrafe      = normalize(articulo.epigrafe).includes(q);
         const inTexto         = (articulo.texto || []).some(t => normalize(t).includes(q));
         const inPalabrasClave = (articulo.palabrasClave || []).some(p => normalize(p).includes(q));
         return inEpigrafe || inTexto || inPalabrasClave;
       });
-
       showSearchResults(matches, rawQuery);
     }
 
@@ -717,7 +714,7 @@
       sidebarTree.style.display = '';
     }
 
-    // ─── Copiar texto ─────────────────────────────────────────
+    // ─── Copiar texto
     function copyCurrentArticle() {
       if (!FLAT.length) return;
       const { articulo } = FLAT[currentIdx];
@@ -740,7 +737,7 @@
     btnCopyBtn.addEventListener('click', copyCurrentArticle);
     btnCopyText.addEventListener('click', copyCurrentArticle);
 
-    // ─── Text-to-Speech con fallback de voz ──────────────────
+    // ─── Text-to-Speech con fallback de voz
     let ttsUtterance = null;
     btnTTS.addEventListener('click', () => {
       if (!window.speechSynthesis) {
@@ -757,11 +754,9 @@
       if (!textos.length) return;
       const full = textos.join(' ');
       ttsUtterance = new SpeechSynthesisUtterance(full);
-
       const voices = speechSynthesis.getVoices();
       const hasParaguay = voices.some(v => v.lang.startsWith('es-PY'));
       ttsUtterance.lang = hasParaguay ? 'es-PY' : 'es';
-
       ttsUtterance.onend = () => { btnTTS.textContent = '🔊 Escuchar'; };
       ttsUtterance.onerror = () => { btnTTS.textContent = '🔊 Escuchar'; };
       speechSynthesis.speak(ttsUtterance);
@@ -772,7 +767,7 @@
       speechSynthesis.onvoiceschanged = () => {};
     }
 
-    // ─── Init ─────────────────────────────────────────────────
+    // ─── Init
     loadData();
   </script>
 </body>
