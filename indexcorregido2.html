@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Código Penal del Paraguay — Consulta</title>
+  <title>Código Penal del Paraguay</title>
   <style>
     :root {
       --bg: #f7f3ea;
@@ -47,6 +47,14 @@
       transition: transform 0.25s ease;
     }
     .sidebar-header { margin-bottom: 14px; }
+    .sidebar-logo {
+      display: block;
+      width: 100%;
+      max-width: 180px;
+      height: auto;
+      margin: 0 auto 12px;
+      object-fit: contain;
+    }
     .app-title { font-size: 18px; font-weight: 600; letter-spacing: 0.03em; }
     .app-subtitle { font-size: 11px; color: rgba(248, 250, 252, 0.75); margin-top: 3px; }
     .search-box { margin-top: 12px; position: relative; }
@@ -324,7 +332,7 @@
         transition: max-height 0.3s ease, padding 0.3s ease;
       }
       .sidebar.open {
-        max-height: 320px;
+        max-height: 380px;
         padding: 18px 18px 16px;
         overflow-y: auto;
       }
@@ -337,6 +345,7 @@
         grid-row: 3;
       }
       .hamburger { display: inline-flex; align-items: center; }
+      .sidebar-logo { max-width: 140px; }
     }
   </style>
 </head>
@@ -345,7 +354,13 @@
   <!-- ── SIDEBAR ── -->
   <aside class="sidebar" id="sidebar" aria-label="Índice del Código Penal">
     <header class="sidebar-header">
-      <div class="app-title">Código Penal — Consulta</div>
+      <img
+        class="sidebar-logo"
+        src="logocodehub.png"
+        alt="CodeHub logo"
+        onerror="this.style.display='none'"
+      />
+      <div class="app-title">Código Penal</div>
       <div class="app-subtitle">Ley Nº 1160/1997 · República del Paraguay</div>
       <div class="search-box">
         <input class="search-input" type="search" id="searchInput"
@@ -475,7 +490,6 @@
     }
 
     // ─── Cargar JSON externo ─────────────────────────────────
-    // FIX: jsonUrl declarado fuera del try para que sea accesible en catch
     const jsonUrl = new URL('codigo_penal_completo.json', window.location.href).href;
 
     async function loadData() {
@@ -487,7 +501,6 @@
         FLAT = buildFlat(DATA);
         renderSidebar();
 
-        // Restaurar artículo desde hash si existe
         const hashNum = getHashArtNum();
         let startIdx = 0;
         if (hashNum !== null) {
@@ -544,7 +557,6 @@
               setActiveChapterBtn(btn);
               const flatIdx = FLAT.findIndex(e => e.capitulo.id === cap.id);
               if (flatIdx !== -1) showArticleByIdx(flatIdx);
-              // Cerrar sidebar en mobile tras selección
               if (window.innerWidth <= 900) sidebar.classList.remove('open');
             });
             chList.appendChild(btn);
@@ -569,18 +581,14 @@
 
       const { libro, titulo, capitulo, articulo } = FLAT[idx];
 
-      // FIX: Actualizar hash en URL para deep linking
       setHashFromIdx(idx);
 
-      // Breadcrumbs
       breadcrumbsEl.innerHTML = `${libro.nombre} · Tít. ${titulo.numero} · Cap. ${capitulo.numero} · <span>Art. ${articulo.numero}</span>`;
 
-      // Header del artículo
       articleNumber.textContent = `Artículo ${articulo.numero}`;
       articleTitle.textContent  = articulo.epigrafe || `Artículo ${articulo.numero}`;
       articleMeta.textContent   = `Título ${titulo.numero} — ${titulo.nombre} · Capítulo ${capitulo.numero} — ${capitulo.nombre}`;
 
-      // Cuerpo
       const textos = articulo.texto || [];
       if (textos.length === 0) {
         articleBody.innerHTML = `
@@ -592,11 +600,9 @@
         articleBody.innerHTML = textos.map(p => `<p>${p}</p>`).join('');
       }
 
-      // Paginación
       btnPrev.disabled = idx === 0;
       btnNext.disabled = idx === FLAT.length - 1;
 
-      // Activar capítulo en sidebar
       const capBtn = document.querySelector(`.chapter-btn[data-cap-id="${capitulo.id}"]`);
       setActiveChapterBtn(capBtn);
       if (capBtn) {
@@ -609,7 +615,6 @@
     btnPrev.addEventListener('click', () => showArticleByIdx(currentIdx - 1));
     btnNext.addEventListener('click', () => showArticleByIdx(currentIdx + 1));
 
-    // ─── Navegar con hash cambiado desde el navegador (atrás/adelante) ──
     window.addEventListener('hashchange', () => {
       const hashNum = getHashArtNum();
       if (hashNum !== null && FLAT.length) {
@@ -753,7 +758,6 @@
       const full = textos.join(' ');
       ttsUtterance = new SpeechSynthesisUtterance(full);
 
-      // FIX: Fallback de idioma si es-PY no está disponible
       const voices = speechSynthesis.getVoices();
       const hasParaguay = voices.some(v => v.lang.startsWith('es-PY'));
       ttsUtterance.lang = hasParaguay ? 'es-PY' : 'es';
@@ -764,7 +768,6 @@
       btnTTS.textContent = '⏹ Detener';
     });
 
-    // speechSynthesis puede necesitar cargar voces de forma asíncrona
     if (window.speechSynthesis && speechSynthesis.onvoiceschanged !== undefined) {
       speechSynthesis.onvoiceschanged = () => {};
     }
