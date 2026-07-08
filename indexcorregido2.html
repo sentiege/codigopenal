@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Código Penal del Paraguay — Consulta</title>
+  <style>
+    :root {
+      --bg: #f7f3ea;
+      --bg-panel: #ffffff;
+      --bg-sidebar: #1f3147;
+      --bg-sidebar-alt: #223650;
+      --border-soft: #dde0e5;
+      --text-main: #1f2329;
+      --text-muted: #62666f;
+      --text-inverse: #f7f3ea;
+      --accent-gold: #c9a227;
+      --accent-gold-soft: #f0d9a0;
+      --accent-blue: #34557f;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.12);
+      --sidebar-width: 320px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      height: 100vh;
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────── */
+    .sidebar {
+      grid-row: 1 / -1;
+      background: linear-gradient(180deg, var(--bg-sidebar), var(--bg-sidebar-alt));
+      color: var(--text-inverse);
+      padding: 18px 18px 16px;
+      border-right: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.25s ease;
+    }
+    .sidebar-header { margin-bottom: 14px; }
+    .app-title { font-size: 18px; font-weight: 600; letter-spacing: 0.03em; }
+    .app-subtitle { font-size: 11px; color: rgba(248, 250, 252, 0.75); margin-top: 3px; }
+    .search-box { margin-top: 12px; position: relative; }
+    .search-input {
+      width: 100%;
+      padding: 8px 32px 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.55);
+      color: var(--text-inverse);
+      font-size: 12px;
+    }
+    .search-input::placeholder { color: rgba(226, 232, 240, 0.7); }
+    .search-clear {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: rgba(226, 232, 240, 0.6);
+      cursor: pointer;
+      font-size: 14px;
+      display: none;
+      line-height: 1;
+    }
+    .search-clear.visible { display: block; }
+
+    /* Search results panel */
+    .search-results {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .search-results.visible { display: flex; }
+    .search-result-item {
+      padding: 8px 9px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--text-inverse);
+      transition: background 0.15s;
+    }
+    .search-result-item:hover { background: rgba(15, 23, 42, 0.85); }
+    .search-result-num { font-weight: 700; color: var(--accent-gold); }
+    .search-result-epig { font-weight: 500; display: block; margin-top: 2px; }
+    .search-result-ctx {
+      font-size: 10px;
+      color: rgba(226, 232, 240, 0.65);
+      display: block;
+      margin-top: 1px;
+    }
+    .search-highlight { background: rgba(201, 162, 39, 0.45); border-radius: 2px; padding: 0 1px; }
+    .search-empty {
+      font-size: 12px;
+      color: rgba(226, 232, 240, 0.6);
+      text-align: center;
+      padding: 20px 0;
+    }
+    .search-count {
+      font-size: 10px;
+      color: rgba(226, 232, 240, 0.5);
+      margin-bottom: 6px;
+      padding-left: 2px;
+    }
+
+    /* Sidebar tree */
+    .sidebar-scroll {
+      margin-top: 12px;
+      padding-right: 4px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .tree-group-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(226, 232, 240, 0.85);
+      margin-bottom: 8px;
+    }
+    .title-block {
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.65);
+      margin-bottom: 8px;
+    }
+    .title-head {
+      width: 100%;
+      padding: 8px 9px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      text-align: left;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text-inverse);
+    }
+    .title-head-main { display: flex; flex-direction: column; }
+    .title-kicker { font-size: 10px; color: rgba(226, 232, 240, 0.8); text-transform: uppercase; letter-spacing: 0.08em; }
+    .title-name { font-size: 12px; font-weight: 600; margin-top: 2px; }
+    .title-range { font-size: 10px; color: rgba(226, 232, 240, 0.75); margin-top: 1px; }
+    .title-chevron { font-size: 11px; color: rgba(226, 232, 240, 0.75); transition: transform 0.15s ease; }
+    .title-block.open .title-chevron { transform: rotate(90deg); }
+    .chapter-list { display: none; border-top: 1px solid rgba(148, 163, 184, 0.45); padding: 4px 5px 6px; }
+    .title-block.open .chapter-list { display: block; }
+    .chapter-btn {
+      width: 100%;
+      padding: 6px 6px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-inverse);
+      text-align: left;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .chapter-btn:hover, .chapter-btn.active { background: rgba(15, 23, 42, 0.9); }
+    .chapter-name { font-weight: 500; display: block; }
+    .chapter-range { font-size: 10px; color: rgba(226, 232, 240, 0.7); display: block; }
+
+    /* ── Hamburger (mobile) ───────────────────────────────── */
+    .hamburger {
+      display: none;
+      background: none;
+      border: 1px solid var(--border-soft);
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    /* ── Header ──────────────────────────────────────────── */
+    .header {
+      grid-column: 2;
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--border-soft);
+      background: rgba(247, 243, 234, 0.94);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .breadcrumbs { font-size: 11px; color: var(--text-muted); }
+    .breadcrumbs span { color: var(--accent-blue); font-weight: 600; }
+    .header-actions { display: flex; gap: 8px; align-items: center; }
+    .header-btn {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: var(--bg-panel);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    /* ── Main / Reader ───────────────────────────────────── */
+    .main {
+      grid-column: 2;
+      padding: 16px 18px;
+      overflow-y: auto;
+      background: radial-gradient(circle at top left, rgba(201, 162, 39, 0.12), transparent 60%), var(--bg);
+    }
+    .reader {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--bg-panel);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-md);
+      padding: 18px 20px 20px;
+    }
+    .article-header { border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 10px; }
+    .article-number { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent-blue); font-weight: 600; }
+    .article-title { font-size: 20px; margin-top: 4px; color: var(--accent-blue); letter-spacing: -0.01em; }
+    .article-subtitle { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .article-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 10px; }
+    .article-btn {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .article-btn.primary { border-color: var(--accent-gold); background: var(--accent-gold-soft); color: #4b3410; }
+    .article-body { font-size: 13px; line-height: 1.8; color: var(--text-main); margin-top: 4px; }
+    .article-body p { margin-bottom: 8px; }
+    .article-body ol { margin: 6px 0 8px 18px; }
+    .article-body li { margin-bottom: 4px; }
+
+    /* Empty state */
+    .article-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 24px 0;
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    .article-empty-icon { font-size: 32px; opacity: 0.4; }
+    .article-empty p { max-width: 320px; line-height: 1.6; }
+
+    /* Loading state */
+    .loading-state {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid var(--border-soft);
+      border-top-color: var(--accent-blue);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .article-footer {
+      border-top: 1px solid #e5e7eb;
+      margin-top: 10px;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .pager { display: flex; gap: 6px; }
+    .pager button {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .pager button:hover:not(:disabled) { background: var(--accent-gold-soft); border-color: var(--accent-gold); }
+    .pager button:disabled { opacity: 0.35; cursor: default; }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+        overflow: auto;
+        height: auto;
+        min-height: 100vh;
+      }
+      .sidebar {
+        grid-row: 2;
+        grid-column: 1;
+        border-right: none;
+        border-top: 1px solid rgba(148, 163, 184, 0.4);
+        max-height: 0;
+        padding: 0 18px;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+      }
+      .sidebar.open {
+        max-height: 320px;
+        padding: 18px 18px 16px;
+        overflow-y: auto;
+      }
+      .header {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .main {
+        grid-column: 1;
+        grid-row: 3;
+      }
+      .hamburger { display: inline-flex; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar" aria-label="Índice del Código Penal">
+    <header class="sidebar-header">
+      <div class="app-title">Código Penal — Consulta</div>
+      <div class="app-subtitle">Ley Nº 1160/1997 · República del Paraguay</div>
+      <div class="search-box">
+        <input class="search-input" type="search" id="searchInput"
+               placeholder="Buscar por artículo o palabra clave…" autocomplete="off" />
+        <button class="search-clear" id="searchClear" type="button" title="Limpiar búsqueda">✕</button>
+      </div>
+    </header>
+
+    <!-- Search results (shown when query active) -->
+    <div class="search-results" id="searchResults" aria-live="polite"></div>
+
+    <!-- Normal tree (hidden when searching) -->
+    <div class="sidebar-scroll" id="sidebarTree">
+      <div class="tree-group-title">Estructura</div>
+      <div class="loading-state">
+        <div class="spinner"></div> Cargando estructura…
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+      <button class="hamburger" id="hamburger" type="button" aria-label="Mostrar/ocultar índice">☰</button>
+      <div class="breadcrumbs" id="breadcrumbs">
+        <span>Seleccioná un artículo del índice</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="header-btn" id="btnCopyText" type="button">Copiar texto</button>
+    </div>
+  </header>
+
+  <!-- ── MAIN / READER ── -->
+  <main class="main">
+    <section class="reader" aria-label="Artículo seleccionado">
+      <header class="article-header">
+        <div class="article-number" id="articleNumber">—</div>
+        <h1 class="article-title" id="articleTitle">Código Penal del Paraguay</h1>
+        <p class="article-subtitle" id="articleMeta">Seleccioná un capítulo del índice lateral para comenzar.</p>
+      </header>
+      <div class="article-toolbar">
+        <button class="article-btn primary" id="btnTTS" type="button">🔊 Escuchar</button>
+        <button class="article-btn" id="btnCopyBtn" type="button">📋 Copiar texto</button>
+      </div>
+      <div class="article-body" id="articleBody">
+        <div class="loading-state">
+          <div class="spinner"></div> Cargando datos del Código Penal…
+        </div>
+      </div>
+      <footer class="article-footer">
+        <div id="articleSource">Fuente: CSJ - IIJ, edición digital · actualizado 2025-05</div>
+        <div class="pager">
+          <button id="btnPrev" type="button" disabled>← Art. anterior</button>
+          <button id="btnNext" type="button" disabled>Art. siguiente →</button>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    // ─── Estado global ───────────────────────────────────────
+    let DATA = null;
+    let FLAT = [];
+    let currentIdx = 0;
+
+    // ─── Referencias DOM ─────────────────────────────────────
+    const sidebar       = document.getElementById('sidebar');
+    const hamburger     = document.getElementById('hamburger');
+    const sidebarTree   = document.getElementById('sidebarTree');
+    const searchInput   = document.getElementById('searchInput');
+    const searchClear   = document.getElementById('searchClear');
+    const searchResults = document.getElementById('searchResults');
+    const breadcrumbsEl = document.getElementById('breadcrumbs');
+    const articleNumber = document.getElementById('articleNumber');
+    const articleTitle  = document.getElementById('articleTitle');
+    const articleMeta   = document.getElementById('articleMeta');
+    const articleBody   = document.getElementById('articleBody');
+    const btnPrev       = document.getElementById('btnPrev');
+    const btnNext       = document.getElementById('btnNext');
+    const btnTTS        = document.getElementById('btnTTS');
+    const btnCopyBtn    = document.getElementById('btnCopyBtn');
+    const btnCopyText   = document.getElementById('btnCopyText');
+
+    // ─── Hamburger toggle (mobile) ────────────────────────────
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // ─── Utilidades ──────────────────────────────────────────
+    function normalize(str) {
+      return (str || '').toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function highlight(str, query) {
+      if (!query) return str;
+      const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return str.replace(re, '<mark class="search-highlight">$1</mark>');
+    }
+
+    // ─── Construir lista plana con validación ─────────────────
+    function buildFlat(data) {
+      const flat = [];
+      (data.libros || []).forEach(libro => {
+        (libro.titulos || []).forEach(titulo => {
+          (titulo.capitulos || []).forEach(capitulo => {
+            (capitulo.articulos || []).forEach(articulo => {
+              flat.push({ libro, titulo, capitulo, articulo });
+            });
+          });
+        });
+      });
+      return flat;
+    }
+
+    // ─── Deep linking — hash ──────────────────────────────────
+    function getHashArtNum() {
+      const h = window.location.hash.replace('#art-', '').trim();
+      return h ? parseInt(h, 10) : null;
+    }
+
+    function setHashFromIdx(idx) {
+      if (!FLAT.length) return;
+      const { articulo } = FLAT[idx];
+      history.replaceState(null, '', '#art-' + articulo.numero);
+    }
+
+    // ─── Cargar JSON externo ─────────────────────────────────
+    // FIX: jsonUrl declarado fuera del try para que sea accesible en catch
+    const jsonUrl = new URL('codigo_penal_completo.json', window.location.href).href;
+
+    async function loadData() {
+      try {
+        const res = await fetch(jsonUrl, { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        DATA = await res.json();
+        if (!DATA || !Array.isArray(DATA.libros)) throw new Error('Estructura JSON inválida: falta "libros".');
+        FLAT = buildFlat(DATA);
+        renderSidebar();
+
+        // Restaurar artículo desde hash si existe
+        const hashNum = getHashArtNum();
+        let startIdx = 0;
+        if (hashNum !== null) {
+          const found = FLAT.findIndex(e => e.articulo.numero === hashNum);
+          if (found !== -1) startIdx = found;
+        }
+        showArticleByIdx(startIdx);
+      } catch (err) {
+        sidebarTree.innerHTML = `<div class="search-empty">⚠️ Error al cargar el JSON.<br><small>${err.message}</small></div>`;
+        articleBody.innerHTML = `<div class="article-empty"><div class="article-empty-icon">⚠️</div><p>No se pudo cargar <code>codigo_penal_completo.json</code> desde <code>${jsonUrl}</code>. Verificá que GitHub Pages esté publicado y que ambos archivos estén en la misma carpeta del sitio.</p></div>`;
+      }
+    }
+
+    // ─── Renderizar sidebar ───────────────────────────────────
+    function renderSidebar() {
+      sidebarTree.innerHTML = '';
+      DATA.libros.forEach(libro => {
+        const groupTitle = document.createElement('div');
+        groupTitle.className = 'tree-group-title';
+        groupTitle.textContent = libro.nombre;
+        sidebarTree.appendChild(groupTitle);
+
+        libro.titulos.forEach(titulo => {
+          const block = document.createElement('section');
+          block.className = 'title-block';
+
+          const head = document.createElement('button');
+          head.className = 'title-head';
+          head.type = 'button';
+          head.innerHTML = `
+            <div class="title-head-main">
+              <span class="title-kicker">Título ${titulo.numero}</span>
+              <span class="title-name">${titulo.nombre}</span>
+              <span class="title-range">Arts. ${titulo.rangoArticulos}</span>
+            </div>
+            <span class="title-chevron">›</span>
+          `;
+          head.addEventListener('click', () => block.classList.toggle('open'));
+          block.appendChild(head);
+
+          const chList = document.createElement('div');
+          chList.className = 'chapter-list';
+
+          titulo.capitulos.forEach(cap => {
+            const btn = document.createElement('button');
+            btn.className = 'chapter-btn';
+            btn.type = 'button';
+            btn.dataset.capId = cap.id;
+            btn.innerHTML = `
+              <span class="chapter-name">Cap. ${cap.numero} — ${cap.nombre}</span>
+              <span class="chapter-range">Arts. ${cap.rangoArticulos}</span>
+            `;
+            btn.addEventListener('click', () => {
+              setActiveChapterBtn(btn);
+              const flatIdx = FLAT.findIndex(e => e.capitulo.id === cap.id);
+              if (flatIdx !== -1) showArticleByIdx(flatIdx);
+              // Cerrar sidebar en mobile tras selección
+              if (window.innerWidth <= 900) sidebar.classList.remove('open');
+            });
+            chList.appendChild(btn);
+          });
+
+          block.appendChild(chList);
+          sidebarTree.appendChild(block);
+        });
+      });
+    }
+
+    function setActiveChapterBtn(activeBtn) {
+      document.querySelectorAll('.chapter-btn').forEach(b => b.classList.remove('active'));
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    // ─── Mostrar artículo por índice en FLAT ─────────────────
+    function showArticleByIdx(idx) {
+      if (!FLAT.length) return;
+      idx = Math.max(0, Math.min(idx, FLAT.length - 1));
+      currentIdx = idx;
+
+      const { libro, titulo, capitulo, articulo } = FLAT[idx];
+
+      // FIX: Actualizar hash en URL para deep linking
+      setHashFromIdx(idx);
+
+      // Breadcrumbs
+      breadcrumbsEl.innerHTML = `${libro.nombre} · Tít. ${titulo.numero} · Cap. ${capitulo.numero} · <span>Art. ${articulo.numero}</span>`;
+
+      // Header del artículo
+      articleNumber.textContent = `Artículo ${articulo.numero}`;
+      articleTitle.textContent  = articulo.epigrafe || `Artículo ${articulo.numero}`;
+      articleMeta.textContent   = `Título ${titulo.numero} — ${titulo.nombre} · Capítulo ${capitulo.numero} — ${capitulo.nombre}`;
+
+      // Cuerpo
+      const textos = articulo.texto || [];
+      if (textos.length === 0) {
+        articleBody.innerHTML = `
+          <div class="article-empty">
+            <div class="article-empty-icon">📄</div>
+            <p>El texto de este artículo aún no ha sido cargado en el JSON. Podés añadirlo en <code>codigo_penal_completo.json</code> bajo <code>"texto": [...]</code>.</p>
+          </div>`;
+      } else {
+        articleBody.innerHTML = textos.map(p => `<p>${p}</p>`).join('');
+      }
+
+      // Paginación
+      btnPrev.disabled = idx === 0;
+      btnNext.disabled = idx === FLAT.length - 1;
+
+      // Activar capítulo en sidebar
+      const capBtn = document.querySelector(`.chapter-btn[data-cap-id="${capitulo.id}"]`);
+      setActiveChapterBtn(capBtn);
+      if (capBtn) {
+        const block = capBtn.closest('.title-block');
+        if (block) block.classList.add('open');
+      }
+    }
+
+    // ─── Paginación ───────────────────────────────────────────
+    btnPrev.addEventListener('click', () => showArticleByIdx(currentIdx - 1));
+    btnNext.addEventListener('click', () => showArticleByIdx(currentIdx + 1));
+
+    // ─── Navegar con hash cambiado desde el navegador (atrás/adelante) ──
+    window.addEventListener('hashchange', () => {
+      const hashNum = getHashArtNum();
+      if (hashNum !== null && FLAT.length) {
+        const found = FLAT.findIndex(e => e.articulo.numero === hashNum);
+        if (found !== -1 && found !== currentIdx) showArticleByIdx(found);
+      }
+    });
+
+    // ─── Buscador ─────────────────────────────────────────────
+    let searchDebounce = null;
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim();
+      searchClear.classList.toggle('visible', q.length > 0);
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => runSearch(q), 200);
+    });
+
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      searchClear.classList.remove('visible');
+      hideSearchResults();
+      searchInput.focus();
+    });
+
+    function runSearch(rawQuery) {
+      if (!rawQuery || !FLAT.length) {
+        hideSearchResults();
+        return;
+      }
+
+      const q = normalize(rawQuery);
+      const isNumeric = /^\d+$/.test(rawQuery.trim());
+
+      const matches = FLAT.filter(({ articulo }) => {
+        if (isNumeric) {
+          return String(articulo.numero) === rawQuery.trim();
+        }
+        const inEpigrafe      = normalize(articulo.epigrafe).includes(q);
+        const inTexto         = (articulo.texto || []).some(t => normalize(t).includes(q));
+        const inPalabrasClave = (articulo.palabrasClave || []).some(p => normalize(p).includes(q));
+        return inEpigrafe || inTexto || inPalabrasClave;
+      });
+
+      showSearchResults(matches, rawQuery);
+    }
+
+    function showSearchResults(matches, rawQuery) {
+      sidebarTree.style.display = 'none';
+      searchResults.classList.add('visible');
+      searchResults.innerHTML = '';
+
+      if (matches.length === 0) {
+        searchResults.innerHTML = `<div class="search-empty">Sin resultados para "<strong>${rawQuery}</strong>"</div>`;
+        return;
+      }
+
+      const count = document.createElement('div');
+      count.className = 'search-count';
+      count.textContent = `${matches.length} resultado${matches.length !== 1 ? 's' : ''}`;
+      searchResults.appendChild(count);
+
+      matches.forEach(({ articulo, titulo, capitulo }) => {
+        const flatIdx = FLAT.findIndex(e => e.articulo.numero === articulo.numero && e.capitulo.id === capitulo.id);
+        const item = document.createElement('div');
+        item.className = 'search-result-item';
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+
+        let snippet = '';
+        const q = normalize(rawQuery);
+        const matchedParr = (articulo.texto || []).find(t => normalize(t).includes(q));
+        if (matchedParr) {
+          const start = Math.max(0, normalize(matchedParr).indexOf(q) - 40);
+          snippet = (start > 0 ? '…' : '') + matchedParr.slice(start, start + 100) + (matchedParr.length > start + 100 ? '…' : '');
+        }
+
+        item.innerHTML = `
+          <span class="search-result-num">Art. ${articulo.numero}</span>
+          <span class="search-result-epig">${highlight(articulo.epigrafe || '(sin epígrafe)', rawQuery)}</span>
+          <span class="search-result-ctx">${highlight(snippet, rawQuery) || `Tít. ${titulo.numero} · Cap. ${capitulo.numero}`}</span>
+        `;
+
+        const go = () => {
+          showArticleByIdx(flatIdx);
+          searchInput.value = '';
+          searchClear.classList.remove('visible');
+          hideSearchResults();
+          if (window.innerWidth <= 900) sidebar.classList.remove('open');
+        };
+        item.addEventListener('click', go);
+        item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') go(); });
+        searchResults.appendChild(item);
+      });
+    }
+
+    function hideSearchResults() {
+      searchResults.classList.remove('visible');
+      searchResults.innerHTML = '';
+      sidebarTree.style.display = '';
+    }
+
+    // ─── Copiar texto ─────────────────────────────────────────
+    function copyCurrentArticle() {
+      if (!FLAT.length) return;
+      const { articulo } = FLAT[currentIdx];
+      const txt = [
+        `Artículo ${articulo.numero}${articulo.epigrafe ? ' — ' + articulo.epigrafe : ''}`,
+        '',
+        ...(articulo.texto || ['(texto no disponible)'])
+      ].join('\n');
+      navigator.clipboard.writeText(txt).then(() => {
+        btnCopyBtn.textContent = '✅ Copiado';
+        btnCopyText.textContent = '✅ Copiado';
+        setTimeout(() => {
+          btnCopyBtn.textContent = '📋 Copiar texto';
+          btnCopyText.textContent = 'Copiar texto';
+        }, 2000);
+      }).catch(() => {
+        alert('No se pudo copiar al portapapeles. Verificá los permisos del navegador.');
+      });
+    }
+    btnCopyBtn.addEventListener('click', copyCurrentArticle);
+    btnCopyText.addEventListener('click', copyCurrentArticle);
+
+    // ─── Text-to-Speech con fallback de voz ──────────────────
+    let ttsUtterance = null;
+    btnTTS.addEventListener('click', () => {
+      if (!window.speechSynthesis) {
+        alert('Tu navegador no soporta Text-to-Speech.');
+        return;
+      }
+      if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+        btnTTS.textContent = '🔊 Escuchar';
+        return;
+      }
+      const { articulo } = FLAT[currentIdx];
+      const textos = articulo.texto || [];
+      if (!textos.length) return;
+      const full = textos.join(' ');
+      ttsUtterance = new SpeechSynthesisUtterance(full);
+
+      // FIX: Fallback de idioma si es-PY no está disponible
+      const voices = speechSynthesis.getVoices();
+      const hasParaguay = voices.some(v => v.lang.startsWith('es-PY'));
+      ttsUtterance.lang = hasParaguay ? 'es-PY' : 'es';
+
+      ttsUtterance.onend = () => { btnTTS.textContent = '🔊 Escuchar'; };
+      ttsUtterance.onerror = () => { btnTTS.textContent = '🔊 Escuchar'; };
+      speechSynthesis.speak(ttsUtterance);
+      btnTTS.textContent = '⏹ Detener';
+    });
+
+    // speechSynthesis puede necesitar cargar voces de forma asíncrona
+    if (window.speechSynthesis && speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = () => {};
+    }
+
+    // ─── Init ─────────────────────────────────────────────────
+    loadData();
+  </script>
+</body>
+</html>
