@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Código Penal del Paraguay — Consulta</title>
+  <style>
+    :root {
+      --bg: #f7f3ea;
+      --bg-panel: #ffffff;
+      --bg-sidebar: #1f3147;
+      --bg-sidebar-alt: #223650;
+      --border-soft: #dde0e5;
+      --text-main: #1f2329;
+      --text-muted: #62666f;
+      --text-inverse: #f7f3ea;
+      --accent-gold: #c9a227;
+      --accent-gold-soft: #f0d9a0;
+      --accent-blue: #34557f;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.12);
+      --sidebar-width: 320px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      height: 100vh;
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+    }
+    /* Sidebar */
+    .sidebar {
+      grid-row: 1 / -1;
+      background: linear-gradient(180deg, var(--bg-sidebar), var(--bg-sidebar-alt));
+      color: var(--text-inverse);
+      padding: 18px 18px 16px;
+      border-right: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-header {
+      margin-bottom: 14px;
+    }
+    .app-title {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .app-subtitle {
+      font-size: 11px;
+      color: rgba(248, 250, 252, 0.75);
+      margin-top: 3px;
+    }
+    .search-box {
+      margin-top: 12px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.55);
+      color: var(--text-inverse);
+      font-size: 12px;
+    }
+    .search-input::placeholder {
+      color: rgba(226, 232, 240, 0.7);
+    }
+    .sidebar-scroll {
+      margin-top: 12px;
+      padding-right: 4px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .tree-group-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(226, 232, 240, 0.85);
+      margin-bottom: 8px;
+    }
+    .title-block {
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.65);
+      margin-bottom: 8px;
+    }
+    .title-head {
+      width: 100%;
+      padding: 8px 9px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      text-align: left;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text-inverse);
+    }
+    .title-head-main {
+      display: flex;
+      flex-direction: column;
+    }
+    .title-kicker {
+      font-size: 10px;
+      color: rgba(226, 232, 240, 0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .title-name {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .title-range {
+      font-size: 10px;
+      color: rgba(226, 232, 240, 0.75);
+      margin-top: 1px;
+    }
+    .title-chevron {
+      font-size: 11px;
+      color: rgba(226, 232, 240, 0.75);
+      transition: transform 0.15s ease;
+    }
+    .title-block.open .title-chevron {
+      transform: rotate(90deg);
+    }
+    .chapter-list {
+      display: none;
+      border-top: 1px solid rgba(148, 163, 184, 0.45);
+      padding: 4px 5px 6px;
+    }
+    .title-block.open .chapter-list {
+      display: block;
+    }
+    .chapter-btn {
+      width: 100%;
+      padding: 6px 6px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-inverse);
+      text-align: left;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .chapter-btn:hover,
+    .chapter-btn.active {
+      background: rgba(15, 23, 42, 0.9);
+    }
+    .chapter-name {
+      font-weight: 500;
+      display: block;
+    }
+    .chapter-range {
+      font-size: 10px;
+      color: rgba(226, 232, 240, 0.7);
+      display: block;
+    }
+    /* Header */
+    .header {
+      grid-column: 2;
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--border-soft);
+      background: rgba(247, 243, 234, 0.94);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .breadcrumbs {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .breadcrumbs span:last-child {
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .header-btn {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: var(--bg-panel);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .header-btn.primary {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+    /* Main */
+    .main {
+      grid-column: 2;
+      padding: 16px 18px;
+      overflow-y: auto;
+      background: radial-gradient(circle at top left, rgba(201, 162, 39, 0.12), transparent 60%), var(--bg);
+    }
+    .reader {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--bg-panel);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-md);
+      padding: 18px 20px 20px;
+    }
+    .article-header {
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+    .article-number {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+    .article-title {
+      font-size: 20px;
+      margin-top: 4px;
+      color: var(--accent-blue);
+      letter-spacing: -0.01em;
+    }
+    .article-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .article-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 10px;
+    }
+    .article-btn {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .article-btn.primary {
+      border-color: var(--accent-gold);
+      background: var(--accent-gold-soft);
+      color: #4b3410;
+    }
+    .article-body {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+    .article-body p {
+      margin-bottom: 8px;
+    }
+    .article-body ol {
+      margin: 6px 0 8px 18px;
+    }
+    .article-body li {
+      margin-bottom: 4px;
+    }
+    .article-footer {
+      border-top: 1px solid #e5e7eb;
+      margin-top: 10px;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .pager {
+      display: flex;
+      gap: 6px;
+    }
+    .pager button {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      cursor: pointer;
+    }
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+      }
+      .sidebar {
+        grid-row: 2 / 4;
+        grid-column: 1;
+        border-right: none;
+        border-top: 1px solid rgba(148, 163, 184, 0.4);
+        flex: 0 0 230px;
+      }
+      .main {
+        grid-column: 1;
+      }
+      .reader {
+        border-radius: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Índice del Código Penal">
+    <header class="sidebar-header">
+      <div class="app-title">Código Penal — Consulta</div>
+      <div class="app-subtitle">Libro Primero · Parte General</div>
+      <div class="search-box">
+        <input class="search-input" type="search" id="searchInput" placeholder="Buscar por artículo o palabra" />
+      </div>
+    </header>
+    <div class="sidebar-scroll" id="sidebarTree">
+      <div class="tree-group-title">Estructura</div>
+      <!-- El árbol de Títulos/Capítulos se llenará desde JSON con JS -->
+    </div>
+  </aside>
+
+  <header class="header">
+    <div class="breadcrumbs" id="breadcrumbs">Libro Primero · Título I · Cap. I · Art. 1</div>
+    <div class="header-actions">
+      <button class="header-btn primary" type="button">Continuar lectura</button>
+      <button class="header-btn" type="button">Marcadores</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="reader" aria-label="Artículo seleccionado">
+      <header class="article-header">
+        <div class="article-number" id="articleNumber">Artículo 1</div>
+        <h1 class="article-title" id="articleTitle">Principio de legalidad</h1>
+        <p class="article-subtitle" id="articleMeta">Título I — La ley penal · Capítulo I — Principios básicos</p>
+      </header>
+      <div class="article-toolbar">
+        <button class="article-btn primary" type="button">Escuchar</button>
+        <button class="article-btn" type="button">Marcar leído</button>
+        <button class="article-btn" type="button">Copiar texto</button>
+      </div>
+      <div class="article-body" id="articleBody">
+        <p>Nadie será sancionado con una pena o medida sin que los presupuestos de la punibilidad de la conducta y la sanción aplicable se hallen expresa y estrictamente descritos en una ley vigente con anterioridad a la acción u omisión que motive la sanción.</p>
+      </div>
+      <footer class="article-footer">
+        <div>Fuente: Libro Primero — Parte General, texto oficial actualizado.</div>
+        <div class="pager">
+          <button type="button">← Art. anterior</button>
+          <button type="button">Art. siguiente →</button>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    // Estructura esperada de codigo_penal_libro_primero.json
+    // Se define aquí como comentario para guiar la implementación.
+    /*
+    {
+      "codigo": "Código Penal de la República del Paraguay",
+      "ley": "Ley Nº 1160/1997",
+      "libros": [
+        {
+          "id": "L1",
+          "nombre": "Libro Primero — Parte General",
+          "rangoArticulos": "1-104",
+          "titulos": [
+            {
+              "id": "T1",
+              "numero": 1,
+              "nombre": "LA LEY PENAL",
+              "rangoArticulos": "1-14",
+              "capitulos": [
+                {
+                  "id": "T1C1",
+                  "numero": 1,
+                  "nombre": "Principios básicos",
+                  "rangoArticulos": "1-3",
+                  "articulos": [
+                    {
+                      "numero": 1,
+                      "epigrafe": "Principio de legalidad",
+                      "texto": ["... párrafo 1 ..."],
+                      "palabrasClave": ["legalidad", "pena", "ley previa"],
+                      "rutasRelacionadas": ["T1C1-ART-2"]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    */
+
+    // Ejemplo mínimo de JSON inline solo para mostrar cómo se rellena el sidebar y el artículo.
+    const codigoPenal = {
+      codigo: "Código Penal de la República del Paraguay",
+      ley: "Ley Nº 1160/1997",
+      libros: [
+        {
+          id: "L1",
+          nombre: "Libro Primero — Parte General",
+          rangoArticulos: "1-104",
+          titulos: [
+            {
+              id: "T1",
+              numero: 1,
+              nombre: "LA LEY PENAL",
+              rangoArticulos: "1-14",
+              capitulos: [
+                {
+                  id: "T1C1",
+                  numero: 1,
+                  nombre: "Principios básicos",
+                  rangoArticulos: "1-3",
+                  articulos: [
+                    {
+                      numero: 1,
+                      epigrafe: "Principio de legalidad",
+                      texto: [
+                        "Nadie será sancionado con una pena o medida sin que los presupuestos de la punibilidad de la conducta y la sanción aplicable se hallen expresa y estrictamente descritos en una ley vigente con anterioridad a la acción u omisión que motive la sanción."
+                      ]
+                    },
+                    {
+                      numero: 2,
+                      epigrafe: "Principios de reprochabilidad y de proporcionalidad",
+                      texto: [
+                        "1º No habrá pena sin reprochabilidad.",
+                        "2º La gravedad de la pena no podrá exceder los límites de la gravedad del reproche penal."
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    const sidebarTree = document.getElementById('sidebarTree');
+    const articleNumberEl = document.getElementById('articleNumber');
+    const articleTitleEl = document.getElementById('articleTitle');
+    const articleMetaEl = document.getElementById('articleMeta');
+    const articleBodyEl = document.getElementById('articleBody');
+    const breadcrumbsEl = document.getElementById('breadcrumbs');
+
+    function renderSidebar(libro) {
+      sidebarTree.innerHTML = '<div class="tree-group-title">' + libro.nombre + '</div>';
+      libro.titulos.forEach(titulo => {
+        const titleBlock = document.createElement('section');
+        titleBlock.className = 'title-block';
+
+        const headBtn = document.createElement('button');
+        headBtn.className = 'title-head';
+        headBtn.type = 'button';
+        headBtn.innerHTML = `
+          <div class="title-head-main">
+            <span class="title-kicker">Título ${titulo.numero}</span>
+            <span class="title-name">${titulo.nombre}</span>
+            <span class="title-range">Arts. ${titulo.rangoArticulos}</span>
+          </div>
+          <span class="title-chevron">›</span>
+        `;
+        headBtn.addEventListener('click', () => {
+          titleBlock.classList.toggle('open');
+        });
+        titleBlock.appendChild(headBtn);
+
+        const chapterList = document.createElement('div');
+        chapterList.className = 'chapter-list';
+        titulo.capitulos.forEach(cap => {
+          const capBtn = document.createElement('button');
+          capBtn.className = 'chapter-btn';
+          capBtn.type = 'button';
+          capBtn.innerHTML = `
+            <span class="chapter-name">Cap. ${cap.numero} — ${cap.nombre}</span>
+            <span class="chapter-range">Arts. ${cap.rangoArticulos}</span>
+          `;
+          capBtn.addEventListener('click', () => {
+            document.querySelectorAll('.chapter-btn').forEach(b => b.classList.remove('active'));
+            capBtn.classList.add('active');
+            if (cap.articulos && cap.articulos.length > 0) {
+              loadArticle(libro, titulo, cap, cap.articulos[0]);
+            }
+          });
+          chapterList.appendChild(capBtn);
+        });
+        titleBlock.appendChild(chapterList);
+        sidebarTree.appendChild(titleBlock);
+      });
+    }
+
+    function loadArticle(libro, titulo, capitulo, articulo) {
+      articleNumberEl.textContent = 'Artículo ' + articulo.numero;
+      articleTitleEl.textContent = articulo.epigrafe;
+      articleMetaEl.textContent = `Título ${titulo.numero} — ${titulo.nombre} · Capítulo ${capitulo.numero} — ${capitulo.nombre}`;
+      breadcrumbsEl.textContent = `${libro.nombre} · Título ${titulo.numero} · Cap. ${capitulo.numero} · Art. ${articulo.numero}`;
+      articleBodyEl.innerHTML = '';
+      (articulo.texto || []).forEach(parrafo => {
+        const p = document.createElement('p');
+        p.textContent = parrafo;
+        articleBodyEl.appendChild(p);
+      });
+    }
+
+    const libroPrimero = codigoPenal.libros[0];
+    renderSidebar(libroPrimero);
+    const t1 = libroPrimero.titulos[0];
+    const c1 = t1.capitulos[0];
+    loadArticle(libroPrimero, t1, c1, c1.articulos[0]);
+  </script>
+</body>
+</html>
