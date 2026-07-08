@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Código Penal del Paraguay</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1f3147" />
   <style>
     :root {
       --bg: #f7f3ea;
@@ -19,12 +21,11 @@
       --accent-blue: #34557f;
       --radius-md: 10px;
       --radius-lg: 16px;
-      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.12);
+      --shadow-md: 0 10px 30px rgba(15,23,42,0.12);
       --sidebar-width: 320px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── Layout desktop ──────────────────────────────────── */
     body {
       height: 100vh;
       background: var(--bg);
@@ -36,23 +37,17 @@
       overflow: hidden;
     }
 
-    /* ── Sidebar ─────────────────────────────────────────── */
+    /* ── Sidebar ── */
     .sidebar {
-      grid-column: 1;
-      grid-row: 1 / -1;
+      grid-column: 1; grid-row: 1 / -1;
       background: linear-gradient(180deg, var(--bg-sidebar), var(--bg-sidebar-alt));
       color: var(--text-inverse);
       padding: 18px 18px 16px;
-      border-right: 1px solid rgba(148, 163, 184, 0.6);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      border-right: 1px solid rgba(148,163,184,0.6);
+      display: flex; flex-direction: column; overflow: hidden;
     }
     .sidebar-header { margin-bottom: 14px; text-align: center; }
-    .sidebar-logo {
-      display: block; width: 100%; max-width: 180px;
-      height: auto; margin: 0 auto 12px; object-fit: contain;
-    }
+    .sidebar-logo { display: block; width: 100%; max-width: 180px; height: auto; margin: 0 auto 12px; object-fit: contain; }
     .app-title { font-size: 18px; font-weight: 600; letter-spacing: 0.03em; }
     .app-subtitle { font-size: 11px; color: rgba(248,250,252,0.75); margin-top: 3px; }
     .search-box { margin-top: 12px; position: relative; text-align: left; }
@@ -68,10 +63,7 @@
       cursor: pointer; font-size: 14px; display: none; line-height: 1;
     }
     .search-clear.visible { display: block; }
-    .search-results {
-      display: none; flex-direction: column; gap: 4px;
-      margin-top: 8px; flex: 1; overflow-y: auto;
-    }
+    .search-results { display: none; flex-direction: column; gap: 4px; margin-top: 8px; flex: 1; overflow-y: auto; }
     .search-results.visible { display: flex; }
     .search-result-item {
       padding: 8px 9px; border-radius: 8px;
@@ -86,14 +78,8 @@
     .search-empty { font-size: 12px; color: rgba(226,232,240,0.6); text-align: center; padding: 20px 0; }
     .search-count { font-size: 10px; color: rgba(226,232,240,0.5); margin-bottom: 6px; padding-left: 2px; }
     .sidebar-scroll { margin-top: 12px; padding-right: 4px; overflow-y: auto; flex: 1; }
-    .tree-group-title {
-      font-size: 11px; text-transform: uppercase;
-      letter-spacing: 0.12em; color: rgba(226,232,240,0.85); margin-bottom: 8px;
-    }
-    .title-block {
-      border-radius: 12px; border: 1px solid rgba(148,163,184,0.5);
-      background: rgba(15,23,42,0.65); margin-bottom: 8px;
-    }
+    .tree-group-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(226,232,240,0.85); margin-bottom: 8px; }
+    .title-block { border-radius: 12px; border: 1px solid rgba(148,163,184,0.5); background: rgba(15,23,42,0.65); margin-bottom: 8px; }
     .title-head {
       width: 100%; padding: 8px 9px; display: flex;
       align-items: center; justify-content: space-between;
@@ -109,7 +95,7 @@
     .chapter-list { display: none; border-top: 1px solid rgba(148,163,184,0.45); padding: 4px 5px 6px; }
     .title-block.open .chapter-list { display: block; }
     .chapter-btn {
-      width: 100%; padding: 6px 6px; border-radius: 8px;
+      width: 100%; padding: 6px; border-radius: 8px;
       border: none; background: transparent; color: var(--text-inverse);
       text-align: left; font-size: 11px; cursor: pointer;
     }
@@ -117,7 +103,7 @@
     .chapter-name { font-weight: 500; display: block; }
     .chapter-range { font-size: 10px; color: rgba(226,232,240,0.7); display: block; }
 
-    /* ── Hamburger ───────────────────────────────────────── */
+    /* ── Hamburger ── */
     .hamburger {
       display: none; background: none;
       border: 1px solid var(--border-soft); border-radius: 8px;
@@ -125,26 +111,62 @@
       color: var(--text-main); line-height: 1; flex-shrink: 0;
     }
 
-    /* ── Header ──────────────────────────────────────────── */
+    /* ── Header ── */
     .header {
       grid-column: 2; grid-row: 1;
       padding: 10px 18px;
       border-bottom: 1px solid var(--border-soft);
       background: rgba(247,243,234,0.94);
       display: flex; align-items: center;
-      justify-content: space-between; gap: 16px;
-      min-width: 0;
+      justify-content: space-between; gap: 12px; min-width: 0;
     }
     .breadcrumbs { font-size: 11px; color: var(--text-muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .breadcrumbs span { color: var(--accent-blue); font-weight: 600; }
-    .header-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+    .header-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
     .header-btn {
       font-size: 11px; padding: 6px 10px; border-radius: 999px;
       border: 1px solid var(--border-soft); background: var(--bg-panel);
       color: var(--text-muted); cursor: pointer; white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s;
     }
+    .header-btn:hover { background: var(--accent-gold-soft); border-color: var(--accent-gold); color: #4b3410; }
+    .header-btn.pwa-btn { display: none; }
+    .header-btn.pwa-btn.visible { display: inline-block; }
 
-    /* ── Main / Reader ───────────────────────────────────── */
+    /* ── Tags Panel Overlay ── */
+    .tags-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(15,23,42,0.45); backdrop-filter: blur(2px);
+      align-items: flex-start; justify-content: flex-end;
+    }
+    .tags-overlay.open { display: flex; }
+    .tags-panel {
+      margin: 56px 18px 0 0;
+      background: var(--bg-panel); border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft); box-shadow: var(--shadow-md);
+      padding: 16px 18px 18px; min-width: 260px; max-width: 340px;
+      max-height: calc(100vh - 80px); overflow-y: auto;
+    }
+    .tags-panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .tags-panel-title { font-size: 13px; font-weight: 700; color: var(--accent-blue); }
+    .tags-close {
+      background: none; border: none; font-size: 18px;
+      color: var(--text-muted); cursor: pointer; line-height: 1;
+    }
+    .tags-empty { font-size: 12px; color: var(--text-muted); padding: 8px 0; }
+    .tags-list { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag-chip {
+      font-size: 11px; padding: 4px 11px; border-radius: 999px;
+      background: var(--accent-gold-soft); border: 1px solid var(--accent-gold);
+      color: #4b3410; cursor: pointer; transition: background 0.15s;
+    }
+    .tag-chip:hover { background: var(--accent-gold); color: #fff; }
+    .tags-art-title { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; font-style: italic; }
+
+    /* ── Main / Reader ── */
     .main {
       grid-column: 2; grid-row: 2;
       padding: 16px 18px; overflow-y: auto;
@@ -162,13 +184,6 @@
     .article-number { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent-blue); font-weight: 600; }
     .article-title { font-size: 20px; margin-top: 4px; color: var(--accent-blue); letter-spacing: -0.01em; }
     .article-subtitle { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-    .article-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 10px; }
-    .article-btn {
-      font-size: 11px; padding: 6px 10px; border-radius: 999px;
-      border: 1px solid var(--border-soft); background: #f9fafb;
-      color: var(--text-muted); cursor: pointer;
-    }
-    .article-btn.primary { border-color: var(--accent-gold); background: var(--accent-gold-soft); color: #4b3410; }
     .article-body { font-size: 13px; line-height: 1.8; color: var(--text-main); margin-top: 4px; }
     .article-body p { margin-bottom: 8px; }
     .article-body ol { margin: 6px 0 8px 18px; }
@@ -184,10 +199,7 @@
     }
     .article-empty-icon { font-size: 32px; opacity: 0.4; }
     .article-empty p { max-width: 320px; line-height: 1.6; }
-    .loading-state {
-      display: flex; align-items: center; gap: 10px;
-      padding: 40px 20px; color: var(--text-muted); font-size: 13px;
-    }
+    .loading-state { display: flex; align-items: center; gap: 10px; padding: 40px 20px; color: var(--text-muted); font-size: 13px; }
     .spinner {
       width: 18px; height: 18px;
       border: 2px solid var(--border-soft); border-top-color: var(--accent-blue);
@@ -208,7 +220,7 @@
     .pager button:hover:not(:disabled) { background: var(--accent-gold-soft); border-color: var(--accent-gold); }
     .pager button:disabled { opacity: 0.35; cursor: default; }
 
-    /* ── Audio Player ─────────────────────────────────────── */
+    /* ── Audio Player ── */
     .audio-player {
       grid-column: 2; grid-row: 3;
       background: linear-gradient(135deg, #1a2d45, #243650);
@@ -218,10 +230,7 @@
       box-shadow: 0 -4px 16px rgba(15,23,42,0.18);
     }
     .player-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
-    .player-controls {
-      display: flex; gap: 4px; align-items: center;
-      flex-shrink: 0; flex-wrap: wrap;
-    }
+    .player-controls { display: flex; gap: 4px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
     .player-btn {
       width: 32px; height: 32px; border-radius: 50%; border: none;
       background: rgba(255,255,255,0.1); color: #f7f3ea; font-size: 14px;
@@ -230,112 +239,67 @@
     }
     .player-btn:hover { background: rgba(255,255,255,0.2); }
     .player-btn:active { transform: scale(0.92); }
-    .player-btn.play-btn {
-      width: 40px; height: 40px; font-size: 17px;
-      background: var(--accent-gold); color: #1a2d45;
-    }
+    .player-btn.play-btn { width: 40px; height: 40px; font-size: 17px; background: var(--accent-gold); color: #1a2d45; }
     .player-btn.play-btn:hover { background: #dbb835; }
     .player-btn:disabled { opacity: 0.35; cursor: default; }
     .player-info { flex: 1; min-width: 0; }
-    .player-title {
-      font-size: 12px; font-weight: 600; color: #f7f3ea;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .player-subtitle {
-      font-size: 10px; color: rgba(247,243,234,0.6); margin-top: 1px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
+    .player-title { font-size: 12px; font-weight: 600; color: #f7f3ea; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .player-subtitle { font-size: 10px; color: rgba(247,243,234,0.6); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .player-counter { font-size: 10px; color: rgba(247,243,234,0.5); flex-shrink: 0; text-align: right; }
     .player-bottom { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .player-progress {
-      flex: 1; min-width: 80px; height: 4px;
-      background: rgba(255,255,255,0.15); border-radius: 999px; overflow: hidden;
-    }
-    .player-progress-fill {
-      height: 100%; background: var(--accent-gold);
-      border-radius: 999px; width: 0%; transition: width 0.4s linear;
-    }
+    .player-progress { flex: 1; min-width: 80px; height: 4px; background: rgba(255,255,255,0.15); border-radius: 999px; overflow: hidden; }
+    .player-progress-fill { height: 100%; background: var(--accent-gold); border-radius: 999px; width: 0%; transition: width 0.4s linear; }
     .player-speed-wrap { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
     .player-speed-label { font-size: 10px; color: rgba(247,243,234,0.55); }
-    .player-speed {
-      -webkit-appearance: none; appearance: none;
-      width: 70px; height: 4px; border-radius: 999px;
-      background: rgba(255,255,255,0.15); outline: none; cursor: pointer;
-    }
-    .player-speed::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--accent-gold); cursor: pointer;
-    }
+    .player-speed { -webkit-appearance: none; appearance: none; width: 70px; height: 4px; border-radius: 999px; background: rgba(255,255,255,0.15); outline: none; cursor: pointer; }
+    .player-speed::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-gold); cursor: pointer; }
     .player-speed-val { font-size: 10px; color: var(--accent-gold); min-width: 26px; text-align: right; }
     .player-voice-wrap { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
     .player-voice-label { font-size: 10px; color: rgba(247,243,234,0.55); }
-    .player-voice {
-      font-size: 10px; padding: 2px 5px; border-radius: 6px;
-      border: 1px solid rgba(148,163,184,0.35);
-      background: rgba(15,23,42,0.5); color: #f7f3ea;
-      cursor: pointer; max-width: 130px;
-    }
+    .player-voice { font-size: 10px; padding: 2px 5px; border-radius: 6px; border: 1px solid rgba(148,163,184,0.35); background: rgba(15,23,42,0.5); color: #f7f3ea; cursor: pointer; max-width: 130px; }
 
-    /* ── Responsive ──────────────────────────────────────── */
-    @media (max-width: 900px) {
-      body {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-        overflow-x: hidden;
-        overflow-y: auto;
+    /* ── Print / PDF ── */
+    @media print {
+      body { display: block !important; height: auto !important; overflow: visible !important; background: #fff !important; }
+      .sidebar, .header, .audio-player, .tags-overlay, .article-footer .pager { display: none !important; }
+      .main { padding: 0 !important; overflow: visible !important; }
+      .reader {
+        box-shadow: none !important; border: none !important;
+        border-radius: 0 !important; max-width: 100% !important;
+        padding: 0 !important;
       }
+      .print-header {
+        display: flex !important;
+        align-items: center; gap: 14px;
+        border-bottom: 2px solid #1f3147;
+        padding-bottom: 10px; margin-bottom: 16px;
+      }
+      .print-logo { width: 60px; height: auto; }
+      .print-org { font-size: 11px; color: #1f3147; line-height: 1.5; }
+      .print-org strong { font-size: 13px; display: block; }
+      .article-title { font-size: 18px !important; }
+      .article-body { font-size: 12px !important; line-height: 1.7 !important; }
+      .article-footer { margin-top: 20px !important; }
+    }
+    .print-header { display: none; }
 
-      /* Sidebar: oculto por defecto, se expande con .open */
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      body { display: flex; flex-direction: column; height: auto; min-height: 100vh; overflow-x: hidden; overflow-y: auto; }
       .sidebar {
-        order: 2;
-        grid-row: unset; grid-column: unset;
-        width: 100%;
-        border-right: none;
-        border-top: 1px solid rgba(148,163,184,0.4);
-        max-height: 0;
-        padding: 0 18px;
-        overflow: hidden;
+        order: 2; grid-row: unset; grid-column: unset; width: 100%;
+        border-right: none; border-top: 1px solid rgba(148,163,184,0.4);
+        max-height: 0; padding: 0 18px; overflow: hidden;
         transition: max-height 0.3s ease, padding 0.3s ease;
       }
-      .sidebar.open {
-        max-height: 420px;
-        padding: 18px 18px 16px;
-        overflow-y: auto;
-      }
-
-      .header {
-        order: 1;
-        grid-row: unset; grid-column: unset;
-        width: 100%;
-      }
-
-      .main {
-        order: 3;
-        grid-row: unset; grid-column: unset;
-        width: 100%;
-        padding: 12px 12px;
-        /* Deja espacio para el player fijo en la parte inferior */
-        padding-bottom: 130px;
-      }
-
-      .audio-player {
-        order: 4;
-        grid-row: unset; grid-column: unset;
-        width: 100%;
-        /* Fijo al fondo en mobile */
-        position: fixed;
-        bottom: 0; left: 0; right: 0;
-        z-index: 100;
-        padding: 8px 12px;
-      }
-
+      .sidebar.open { max-height: 420px; padding: 18px 18px 16px; overflow-y: auto; }
+      .header { order: 1; grid-row: unset; grid-column: unset; width: 100%; flex-wrap: wrap; padding: 8px 12px; }
+      .header-actions { gap: 4px; }
+      .header-btn { font-size: 10px; padding: 5px 8px; }
+      .main { order: 3; grid-row: unset; grid-column: unset; width: 100%; padding: 12px; padding-bottom: 130px; }
+      .audio-player { order: 4; grid-row: unset; grid-column: unset; width: 100%; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; padding: 8px 12px; }
       .hamburger { display: inline-flex; align-items: center; }
       .sidebar-logo { max-width: 140px; }
-
-      /* Player en mobile: controles en dos filas */
       .player-top { flex-wrap: wrap; gap: 6px; }
       .player-controls { gap: 4px; }
       .player-btn { width: 36px; height: 36px; font-size: 15px; }
@@ -343,12 +307,10 @@
       .player-info { min-width: 120px; }
       .player-voice-wrap { display: none; }
       .player-bottom { gap: 8px; }
-
-      /* Reader card sin bordes exagerados en mobile */
       .reader { border-radius: 10px; padding: 14px 14px 16px; }
       .article-title { font-size: 17px; }
+      .tags-panel { margin: 56px 8px 0 8px; min-width: unset; max-width: calc(100vw - 16px); }
     }
-
     @media (max-width: 480px) {
       .player-controls { justify-content: center; width: 100%; }
       .player-info { width: 100%; order: -1; }
@@ -378,6 +340,18 @@
     </div>
   </aside>
 
+  <!-- ── TAGS OVERLAY ── -->
+  <div class="tags-overlay" id="tagsOverlay">
+    <div class="tags-panel" id="tagsPanel">
+      <div class="tags-panel-header">
+        <span class="tags-panel-title">🏷️ Palabras clave</span>
+        <button class="tags-close" id="tagsClose" type="button">✕</button>
+      </div>
+      <div class="tags-art-title" id="tagsArtTitle"></div>
+      <div class="tags-list" id="tagsList"></div>
+    </div>
+  </div>
+
   <!-- ── HEADER ── -->
   <header class="header">
     <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
@@ -385,6 +359,9 @@
       <div class="breadcrumbs" id="breadcrumbs"><span>Seleccioná un artículo del índice</span></div>
     </div>
     <div class="header-actions">
+      <button class="header-btn" id="btnTags" type="button" title="Ver palabras clave del artículo">🏷️ Tags</button>
+      <button class="header-btn" id="btnPDF" type="button" title="Exportar artículo como PDF">📄 PDF</button>
+      <button class="header-btn pwa-btn" id="btnInstall" type="button" title="Instalar app en tu dispositivo">📱 Instalar</button>
       <button class="header-btn" id="btnCopyText" type="button">Copiar texto</button>
     </div>
   </header>
@@ -392,15 +369,20 @@
   <!-- ── MAIN / READER ── -->
   <main class="main">
     <section class="reader" aria-label="Artículo seleccionado">
+      <!-- Print header (oculto en pantalla, visible en impresión) -->
+      <div class="print-header">
+        <img class="print-logo" src="logocodehub.png" alt="Logo" onerror="this.style.display='none'" />
+        <div class="print-org">
+          <strong>Código Penal del Paraguay</strong>
+          Ley Nº 1160/1997 · República del Paraguay<br>
+          Fuente: CSJ – IIJ, edición digital · actualizado 2025-05
+        </div>
+      </div>
       <header class="article-header">
         <div class="article-number" id="articleNumber">—</div>
         <h1 class="article-title" id="articleTitle">Código Penal del Paraguay</h1>
         <p class="article-subtitle" id="articleMeta">Seleccioná un capítulo del índice lateral para comenzar.</p>
       </header>
-      <div class="article-toolbar">
-        <button class="article-btn primary" id="btnTTS" type="button">🔊 Escuchar desde aquí</button>
-        <button class="article-btn" id="btnCopyBtn" type="button">📋 Copiar texto</button>
-      </div>
       <div class="article-body" id="articleBody">
         <div class="loading-state"><div class="spinner"></div> Cargando datos del Código Penal…</div>
       </div>
@@ -427,7 +409,7 @@
       </div>
       <div class="player-info">
         <div class="player-title" id="playerTitle">Sin reproducción activa</div>
-        <div class="player-subtitle" id="playerSubtitle">Presioná ▶ o "Escuchar desde aquí" para comenzar</div>
+        <div class="player-subtitle" id="playerSubtitle">Presioná ▶ para comenzar</div>
       </div>
       <div class="player-counter" id="playerCounter"></div>
     </div>
@@ -451,6 +433,7 @@
     let DATA = null, FLAT = [], currentIdx = 0;
     let ttsPlaying = false, ttsPaused = false, ttsStartIdx = 0, ttsReadIdx = 0;
     let voices = [];
+    let deferredInstallPrompt = null;
 
     const sidebar        = document.getElementById('sidebar');
     const hamburger      = document.getElementById('hamburger');
@@ -465,9 +448,14 @@
     const articleBody    = document.getElementById('articleBody');
     const btnPrev        = document.getElementById('btnPrev');
     const btnNext        = document.getElementById('btnNext');
-    const btnTTS         = document.getElementById('btnTTS');
-    const btnCopyBtn     = document.getElementById('btnCopyBtn');
     const btnCopyText    = document.getElementById('btnCopyText');
+    const btnTags        = document.getElementById('btnTags');
+    const btnPDF         = document.getElementById('btnPDF');
+    const btnInstall     = document.getElementById('btnInstall');
+    const tagsOverlay    = document.getElementById('tagsOverlay');
+    const tagsList       = document.getElementById('tagsList');
+    const tagsArtTitle   = document.getElementById('tagsArtTitle');
+    const tagsClose      = document.getElementById('tagsClose');
     const playerPlay     = document.getElementById('playerPlay');
     const playerStop     = document.getElementById('playerStop');
     const playerPrev     = document.getElementById('playerPrev');
@@ -482,8 +470,65 @@
     const playerSpeedVal = document.getElementById('playerSpeedVal');
     const playerVoice    = document.getElementById('playerVoice');
 
+    // ─── PWA ─────────────────────────────────────────────────
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      btnInstall.classList.add('visible');
+    });
+    window.addEventListener('appinstalled', () => {
+      btnInstall.classList.remove('visible');
+      deferredInstallPrompt = null;
+    });
+    btnInstall.addEventListener('click', async () => {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      const { outcome } = await deferredInstallPrompt.userChoice;
+      if (outcome === 'accepted') btnInstall.classList.remove('visible');
+      deferredInstallPrompt = null;
+    });
+
+    // ─── PDF Export ──────────────────────────────────────────
+    btnPDF.addEventListener('click', () => window.print());
+
+    // ─── Tags Panel ──────────────────────────────────────────
+    btnTags.addEventListener('click', () => openTagsPanel());
+    tagsClose.addEventListener('click', () => tagsOverlay.classList.remove('open'));
+    tagsOverlay.addEventListener('click', e => { if (e.target === tagsOverlay) tagsOverlay.classList.remove('open'); });
+
+    function openTagsPanel() {
+      if (!FLAT.length) return;
+      const { articulo } = FLAT[currentIdx];
+      const tags = articulo.palabrasClave || [];
+      tagsArtTitle.textContent = `Art. ${articulo.numero}${articulo.epigrafe ? ' — ' + articulo.epigrafe : ''}`;
+      tagsList.innerHTML = '';
+      if (!tags.length) {
+        tagsList.innerHTML = '<span class="tags-empty">Este artículo no tiene palabras clave registradas en el JSON.</span>';
+      } else {
+        tags.forEach(tag => {
+          const chip = document.createElement('button');
+          chip.className = 'tag-chip';
+          chip.textContent = tag;
+          chip.addEventListener('click', () => {
+            tagsOverlay.classList.remove('open');
+            searchInput.value = tag;
+            searchClear.classList.add('visible');
+            runSearch(tag);
+            if (window.innerWidth <= 900) sidebar.classList.add('open');
+          });
+          tagsList.appendChild(chip);
+        });
+      }
+      tagsOverlay.classList.add('open');
+    }
+
+    // ─── Hamburger ───────────────────────────────────────────
     hamburger.addEventListener('click', () => sidebar.classList.toggle('open'));
 
+    // ─── Utils ───────────────────────────────────────────────
     function normalize(str) {
       return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
@@ -516,6 +561,7 @@
     function savePosition(idx) { try { localStorage.setItem('cp_lastIdx', idx); } catch(e) {} }
     function loadPosition() { try { return parseInt(localStorage.getItem('cp_lastIdx'), 10) || 0; } catch(e) { return 0; } }
 
+    // ─── Data Load ───────────────────────────────────────────
     const jsonUrl = new URL('codigo_penal_completo.json', window.location.href).href;
     async function loadData() {
       try {
@@ -537,10 +583,11 @@
         updatePlayerControls();
       } catch (err) {
         sidebarTree.innerHTML = `<div class="search-empty">⚠️ Error al cargar el JSON.<br><small>${err.message}</small></div>`;
-        articleBody.innerHTML = `<div class="article-empty"><div class="article-empty-icon">⚠️</div><p>No se pudo cargar <code>codigo_penal_completo.json</code> desde <code>${jsonUrl}</code>.</p></div>`;
+        articleBody.innerHTML = `<div class="article-empty"><div class="article-empty-icon">⚠️</div><p>No se pudo cargar <code>codigo_penal_completo.json</code>.</p></div>`;
       }
     }
 
+    // ─── Voices ──────────────────────────────────────────────
     function initVoices() {
       function populate() {
         voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('es'));
@@ -560,11 +607,11 @@
       populate();
     }
     function getSelectedVoice() { return voices[parseInt(playerVoice.value, 10)] || null; }
-
     playerSpeed.addEventListener('input', () => {
       playerSpeedVal.textContent = parseFloat(playerSpeed.value).toFixed(1) + '×';
     });
 
+    // ─── Sidebar Render ──────────────────────────────────────
     function renderSidebar() {
       sidebarTree.innerHTML = '';
       DATA.libros.forEach(libro => {
@@ -608,6 +655,7 @@
       if (activeBtn) activeBtn.classList.add('active');
     }
 
+    // ─── Article Display ─────────────────────────────────────
     function showArticleByIdx(idx, fromPlayer) {
       if (!FLAT.length) return;
       idx = Math.max(0, Math.min(idx, FLAT.length - 1));
@@ -620,7 +668,7 @@
       articleTitle.textContent  = articulo.epigrafe || `Artículo ${articulo.numero}`;
       articleMeta.textContent   = `Título ${titulo.numero} — ${titulo.nombre} · Capítulo ${capitulo.numero} — ${capitulo.nombre}`;
       const textos = articulo.texto || [];
-      if (textos.length === 0) {
+      if (!textos.length) {
         articleBody.innerHTML = `<div class="article-empty"><div class="article-empty-icon">📄</div><p>El texto de este artículo aún no ha sido cargado en el JSON.</p></div>`;
       } else {
         articleBody.innerHTML = textos.map(p => `<p>${p}</p>`).join('');
@@ -646,121 +694,19 @@
       }
     });
 
-    // ─── TTS core ────────────────────────────────────────────
-    function speakArticle(idx) {
-      if (!window.speechSynthesis) return;
-      speechSynthesis.cancel();
-      if (idx >= FLAT.length) { ttsStop(); return; }
-      ttsReadIdx = idx;
-      const { articulo } = FLAT[idx];
-      const textos = articulo.texto || [];
-      showArticleByIdx(idx, true);
-      const pEls = articleBody.querySelectorAll('p');
-      pEls.forEach(p => p.classList.remove('tts-reading'));
-      if (pEls.length) pEls[0].classList.add('tts-reading');
-      updatePlayerInfo(idx);
-      if (!textos.length) {
-        setTimeout(() => { if (ttsPlaying) speakArticle(idx + 1); }, 300);
-        return;
-      }
-      const heading = articulo.epigrafe
-        ? `Artículo número ${articulo.numero}. ${articulo.epigrafe}.`
-        : `Artículo número ${articulo.numero}.`;
-      const full = heading + ' ' + textos.join(' ');
-      const utt = new SpeechSynthesisUtterance(full);
-      utt.rate  = parseFloat(playerSpeed.value);
-      utt.pitch = 1;
-      const voice = getSelectedVoice();
-      if (voice) utt.voice = voice;
-      else utt.lang = 'es';
-      utt.onend = () => { if (ttsPlaying) speakArticle(idx + 1); };
-      utt.onerror = (e) => {
-        if (e.error === 'interrupted' || e.error === 'canceled') return;
-        if (ttsPlaying) speakArticle(idx + 1);
-      };
-      speechSynthesis.speak(utt);
-    }
-
-    function ttsPlay(startFromIdx) {
-      if (!window.speechSynthesis) { alert('Tu navegador no soporta Text-to-Speech.'); return; }
-      ttsPlaying = true; ttsPaused = false;
-      ttsStartIdx = startFromIdx !== undefined ? startFromIdx : currentIdx;
-      playerPlay.textContent = '⏸'; playerPlay.title = 'Pausar';
-      playerStop.disabled = false; playerPrev.disabled = false;
-      playerNext.disabled = false; playerSkipBack.disabled = false; playerSkipFwd.disabled = false;
-      speakArticle(ttsStartIdx);
-    }
-    function ttsPause() {
-      if (!window.speechSynthesis) return;
-      if (speechSynthesis.speaking && !speechSynthesis.paused) {
-        speechSynthesis.pause(); ttsPaused = true;
-        playerPlay.textContent = '▶'; playerPlay.title = 'Reanudar';
-      }
-    }
-    function ttsResume() {
-      if (!window.speechSynthesis) return;
-      if (speechSynthesis.paused) {
-        speechSynthesis.resume(); ttsPaused = false;
-        playerPlay.textContent = '⏸'; playerPlay.title = 'Pausar';
-      }
-    }
-    function ttsStop() {
-      speechSynthesis.cancel();
-      ttsPlaying = false; ttsPaused = false;
-      playerPlay.textContent = '▶'; playerPlay.title = 'Reproducir';
-      playerStop.disabled = true; playerPrev.disabled = true;
-      playerNext.disabled = true; playerSkipBack.disabled = true; playerSkipFwd.disabled = true;
-      playerProgressFill.style.width = '0%';
-      playerTitle.textContent = 'Sin reproducción activa';
-      playerSubtitle.textContent = 'Presioná ▶ o "Escuchar desde aquí" para comenzar';
-      playerCounter.textContent = '';
-      document.querySelectorAll('.tts-reading').forEach(p => p.classList.remove('tts-reading'));
-      btnTTS.textContent = '🔊 Escuchar desde aquí';
-    }
-    function updatePlayerInfo(idx) {
-      if (!FLAT.length) return;
-      const { articulo, titulo, capitulo } = FLAT[idx];
-      playerTitle.textContent = `Art. ${articulo.numero}${articulo.epigrafe ? ' — ' + articulo.epigrafe : ''}`;
-      playerSubtitle.textContent = `Tít. ${titulo.numero} · Cap. ${capitulo.numero} — ${capitulo.nombre}`;
-      playerCounter.textContent = `${idx + 1} / ${FLAT.length}`;
-      const pct = FLAT.length > 1 ? (idx / (FLAT.length - 1)) * 100 : 100;
-      playerProgressFill.style.width = pct.toFixed(1) + '%';
-    }
-    function updatePlayerControls() {
-      const active = ttsPlaying;
-      playerStop.disabled = !active; playerPrev.disabled = !active;
-      playerNext.disabled = !active; playerSkipBack.disabled = !active; playerSkipFwd.disabled = !active;
-    }
-
-    playerPlay.addEventListener('click', () => {
-      if (!window.speechSynthesis) { alert('Tu navegador no soporta Text-to-Speech.'); return; }
-      if (!ttsPlaying) ttsPlay(currentIdx);
-      else if (ttsPaused) ttsResume();
-      else ttsPause();
-    });
-    playerStop.addEventListener('click', () => ttsStop());
-    playerPrev.addEventListener('click', () => { if (ttsPlaying) speakArticle(Math.max(0, ttsReadIdx - 1)); });
-    playerNext.addEventListener('click', () => { if (ttsPlaying) speakArticle(Math.min(FLAT.length - 1, ttsReadIdx + 1)); });
-    playerSkipBack.addEventListener('click', () => { if (ttsPlaying) speakArticle(Math.max(0, ttsReadIdx - 5)); });
-    playerSkipFwd.addEventListener('click', () => { if (ttsPlaying) speakArticle(Math.min(FLAT.length - 1, ttsReadIdx + 5)); });
-
-    btnTTS.addEventListener('click', () => {
-      if (ttsPlaying) { ttsStop(); }
-      else { ttsPlay(currentIdx); btnTTS.textContent = '⏹ Detener'; }
-    });
-
+    // ─── Copy ────────────────────────────────────────────────
     function copyCurrentArticle() {
       if (!FLAT.length) return;
       const { articulo } = FLAT[currentIdx];
       const txt = [`Artículo ${articulo.numero}${articulo.epigrafe ? ' — ' + articulo.epigrafe : ''}`, '', ...(articulo.texto || ['(texto no disponible)'])].join('\n');
       navigator.clipboard.writeText(txt).then(() => {
-        btnCopyBtn.textContent = '✅ Copiado'; btnCopyText.textContent = '✅ Copiado';
-        setTimeout(() => { btnCopyBtn.textContent = '📋 Copiar texto'; btnCopyText.textContent = 'Copiar texto'; }, 2000);
+        btnCopyText.textContent = '✅ Copiado';
+        setTimeout(() => { btnCopyText.textContent = 'Copiar texto'; }, 2000);
       }).catch(() => alert('No se pudo copiar al portapapeles.'));
     }
-    btnCopyBtn.addEventListener('click', copyCurrentArticle);
     btnCopyText.addEventListener('click', copyCurrentArticle);
 
+    // ─── Search ──────────────────────────────────────────────
     let searchDebounce = null;
     searchInput.addEventListener('input', () => {
       const q = searchInput.value.trim();
@@ -788,7 +734,7 @@
       sidebarTree.style.display = 'none';
       searchResults.classList.add('visible');
       searchResults.innerHTML = '';
-      if (matches.length === 0) {
+      if (!matches.length) {
         searchResults.innerHTML = `<div class="search-empty">Sin resultados para "<strong>${rawQuery}</strong>"</div>`;
         return;
       }
@@ -826,6 +772,89 @@
       searchResults.innerHTML = '';
       sidebarTree.style.display = '';
     }
+
+    // ─── TTS ─────────────────────────────────────────────────
+    function speakArticle(idx) {
+      if (!window.speechSynthesis) return;
+      speechSynthesis.cancel();
+      if (idx >= FLAT.length) { ttsStop(); return; }
+      ttsReadIdx = idx;
+      const { articulo } = FLAT[idx];
+      const textos = articulo.texto || [];
+      showArticleByIdx(idx, true);
+      const pEls = articleBody.querySelectorAll('p');
+      pEls.forEach(p => p.classList.remove('tts-reading'));
+      if (pEls.length) pEls[0].classList.add('tts-reading');
+      updatePlayerInfo(idx);
+      if (!textos.length) { setTimeout(() => { if (ttsPlaying) speakArticle(idx + 1); }, 300); return; }
+      const heading = articulo.epigrafe
+        ? `Artículo número ${articulo.numero}. ${articulo.epigrafe}.`
+        : `Artículo número ${articulo.numero}.`;
+      const utt = new SpeechSynthesisUtterance(heading + ' ' + textos.join(' '));
+      utt.rate = parseFloat(playerSpeed.value); utt.pitch = 1;
+      const voice = getSelectedVoice();
+      if (voice) utt.voice = voice; else utt.lang = 'es';
+      utt.onend = () => { if (ttsPlaying) speakArticle(idx + 1); };
+      utt.onerror = e => { if (e.error === 'interrupted' || e.error === 'canceled') return; if (ttsPlaying) speakArticle(idx + 1); };
+      speechSynthesis.speak(utt);
+    }
+    function ttsPlay(startFromIdx) {
+      if (!window.speechSynthesis) { alert('Tu navegador no soporta Text-to-Speech.'); return; }
+      ttsPlaying = true; ttsPaused = false;
+      ttsStartIdx = startFromIdx !== undefined ? startFromIdx : currentIdx;
+      playerPlay.textContent = '⏸'; playerPlay.title = 'Pausar';
+      playerStop.disabled = false; playerPrev.disabled = false;
+      playerNext.disabled = false; playerSkipBack.disabled = false; playerSkipFwd.disabled = false;
+      speakArticle(ttsStartIdx);
+    }
+    function ttsPause() {
+      if (speechSynthesis.speaking && !speechSynthesis.paused) {
+        speechSynthesis.pause(); ttsPaused = true;
+        playerPlay.textContent = '▶'; playerPlay.title = 'Reanudar';
+      }
+    }
+    function ttsResume() {
+      if (speechSynthesis.paused) {
+        speechSynthesis.resume(); ttsPaused = false;
+        playerPlay.textContent = '⏸'; playerPlay.title = 'Pausar';
+      }
+    }
+    function ttsStop() {
+      speechSynthesis.cancel();
+      ttsPlaying = false; ttsPaused = false;
+      playerPlay.textContent = '▶'; playerPlay.title = 'Reproducir';
+      playerStop.disabled = true; playerPrev.disabled = true;
+      playerNext.disabled = true; playerSkipBack.disabled = true; playerSkipFwd.disabled = true;
+      playerProgressFill.style.width = '0%';
+      playerTitle.textContent = 'Sin reproducción activa';
+      playerSubtitle.textContent = 'Presioná ▶ para comenzar';
+      playerCounter.textContent = '';
+      document.querySelectorAll('.tts-reading').forEach(p => p.classList.remove('tts-reading'));
+    }
+    function updatePlayerInfo(idx) {
+      if (!FLAT.length) return;
+      const { articulo, titulo, capitulo } = FLAT[idx];
+      playerTitle.textContent = `Art. ${articulo.numero}${articulo.epigrafe ? ' — ' + articulo.epigrafe : ''}`;
+      playerSubtitle.textContent = `Tít. ${titulo.numero} · Cap. ${capitulo.numero} — ${capitulo.nombre}`;
+      playerCounter.textContent = `${idx + 1} / ${FLAT.length}`;
+      playerProgressFill.style.width = (FLAT.length > 1 ? (idx / (FLAT.length - 1)) * 100 : 100).toFixed(1) + '%';
+    }
+    function updatePlayerControls() {
+      const a = ttsPlaying;
+      playerStop.disabled = !a; playerPrev.disabled = !a;
+      playerNext.disabled = !a; playerSkipBack.disabled = !a; playerSkipFwd.disabled = !a;
+    }
+    playerPlay.addEventListener('click', () => {
+      if (!window.speechSynthesis) { alert('Tu navegador no soporta Text-to-Speech.'); return; }
+      if (!ttsPlaying) ttsPlay(currentIdx);
+      else if (ttsPaused) ttsResume();
+      else ttsPause();
+    });
+    playerStop.addEventListener('click', ttsStop);
+    playerPrev.addEventListener('click', () => { if (ttsPlaying) speakArticle(Math.max(0, ttsReadIdx - 1)); });
+    playerNext.addEventListener('click', () => { if (ttsPlaying) speakArticle(Math.min(FLAT.length - 1, ttsReadIdx + 1)); });
+    playerSkipBack.addEventListener('click', () => { if (ttsPlaying) speakArticle(Math.max(0, ttsReadIdx - 5)); });
+    playerSkipFwd.addEventListener('click', () => { if (ttsPlaying) speakArticle(Math.min(FLAT.length - 1, ttsReadIdx + 5)); });
 
     loadData();
   </script>

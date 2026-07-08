@@ -1,0 +1,14 @@
+{
+  "name": "Código Penal del Paraguay",
+  "short_name": "Cód. Penal",
+  "description": "Ley Nº 1160/1997 — República del Paraguay",
+  "start_url": "/indexcorregido2.html",
+  "display": "standalone",
+  "background_color": "#f7f3ea",
+  "theme_color": "#1f3147",
+  "orientation": "any",
+  "icons": [
+    { "src": "logocodehub.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "logocodehub.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
