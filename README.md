@@ -16,9 +16,7 @@ Una aplicación moderna, rápida y accesible para consultar, buscar y estudiar e
 
 ## 🛠️ Tecnologías Utilizadas
 
-*   **Frontend / Mobile:** [Insertar aquí la tecnología, ej: Flutter / React Native / Kotlin / Swift]
-*   **Base de Datos Local:** [Insertar aquí la base de datos, ej: SQLite / Room / Hive]
-*   **Base Legal:** Texto oficial del Código Penal Paraguayo (Ley 1160/97) actualizado.
+
 
 ---
 
