@@ -424,7 +424,8 @@
     // ─── Cargar JSON externo ─────────────────────────────────
     async function loadData() {
       try {
-        const res = await fetch('codigo_penal_completo.json');
+        const jsonUrl = new URL('codigo_penal_completo.json', window.location.href).href;
+        const res = await fetch(jsonUrl, { cache: 'no-store' });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         DATA = await res.json();
         FLAT = buildFlat(DATA);
@@ -432,7 +433,7 @@
         showArticleByIdx(0);
       } catch (err) {
         sidebarTree.innerHTML = `<div class="search-empty">⚠️ Error al cargar el JSON.<br><small>${err.message}</small></div>`;
-        articleBody.innerHTML = `<div class="article-empty"><div class="article-empty-icon">⚠️</div><p>No se pudo cargar <code>codigo_penal_completo.json</code>. Verificá que el archivo esté en la misma carpeta que el <code>index.html</code>.</p></div>`;
+        articleBody.innerHTML = `<div class="article-empty"><div class="article-empty-icon">⚠️</div><p>No se pudo cargar <code>codigo_penal_completo.json</code> desde <code>${jsonUrl}</code>. Verificá que GitHub Pages esté publicado y que ambos archivos estén en la misma carpeta del sitio.</p></div>`;
       }
     }
 
