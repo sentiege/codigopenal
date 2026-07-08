@@ -1,0 +1,1081 @@
+{
+  "codigo": "Código Penal de la República del Paraguay",
+  "ley": "Ley Nº 1160/1997",
+  "version": {
+    "fuente": "CSJ - IIJ, edición digital",
+    "actualizado": "2025-05"
+  },
+  "libros": [
+    {
+      "id": "L1",
+      "nombre": "Libro Primero — Parte General",
+      "rangoArticulos": "1-104",
+      "titulos": [
+        {
+          "id": "T1",
+          "numero": 1,
+          "nombre": "LA LEY PENAL",
+          "rangoArticulos": "1-14",
+          "capitulos": [
+            {
+              "id": "T1C1",
+              "numero": 1,
+              "nombre": "Principios básicos",
+              "rangoArticulos": "1-3",
+              "articulos": [
+                {
+                  "numero": 1,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 2,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 3,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T1C2",
+              "numero": 2,
+              "nombre": "Aplicación de la ley",
+              "rangoArticulos": "4-12",
+              "articulos": [
+                {
+                  "numero": 4,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 5,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 6,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 7,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 8,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 9,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 10,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 11,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 12,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T1C3",
+              "numero": 3,
+              "nombre": "Clasificación y definiciones",
+              "rangoArticulos": "13-14",
+              "articulos": [
+                {
+                  "numero": 13,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 14,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "T2",
+          "numero": 2,
+          "nombre": "EL HECHO PUNIBLE",
+          "rangoArticulos": "15-36",
+          "capitulos": [
+            {
+              "id": "T2C1",
+              "numero": 1,
+              "nombre": "Presupuestos de la punibilidad",
+              "rangoArticulos": "15-25",
+              "articulos": [
+                {
+                  "numero": 15,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 16,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 17,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 18,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 19,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 20,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 21,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 22,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 23,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 24,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 25,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T2C2",
+              "numero": 2,
+              "nombre": "Tentativa",
+              "rangoArticulos": "26-28",
+              "articulos": [
+                {
+                  "numero": 26,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 27,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 28,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T2C3",
+              "numero": 3,
+              "nombre": "Pluralidad de participantes",
+              "rangoArticulos": "29-34",
+              "articulos": [
+                {
+                  "numero": 29,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 30,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 31,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 32,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 33,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 34,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T2C4",
+              "numero": 4,
+              "nombre": "Declaraciones e informes legislativos",
+              "rangoArticulos": "35-36",
+              "articulos": [
+                {
+                  "numero": 35,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 36,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "T3",
+          "numero": 3,
+          "nombre": "DE LAS PENAS",
+          "rangoArticulos": "37-71",
+          "capitulos": [
+            {
+              "id": "T3C1",
+              "numero": 1,
+              "nombre": "Clases de penas",
+              "rangoArticulos": "37",
+              "articulos": [
+                {
+                  "numero": 37,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T3C2",
+              "numero": 2,
+              "nombre": "Penas principales",
+              "rangoArticulos": "38-56",
+              "articulos": [
+                {
+                  "numero": 38,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 39,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 40,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 41,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 42,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 43,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 44,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 45,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 46,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 47,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 48,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 49,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 50,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 51,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 52,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 53,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 54,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 55,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 56,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T3C3",
+              "numero": 3,
+              "nombre": "Penas complementarias",
+              "rangoArticulos": "57-58",
+              "articulos": [
+                {
+                  "numero": 57,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 58,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T3C4",
+              "numero": 4,
+              "nombre": "Penas adicionales",
+              "rangoArticulos": "59-60",
+              "articulos": [
+                {
+                  "numero": 59,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 60,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T3C5",
+              "numero": 5,
+              "nombre": "Apercibimiento y prescindibilidad de la pena",
+              "rangoArticulos": "61-64",
+              "articulos": [
+                {
+                  "numero": 61,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 62,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 63,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 64,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T3C6",
+              "numero": 6,
+              "nombre": "Medición de la pena",
+              "rangoArticulos": "65-71",
+              "articulos": [
+                {
+                  "numero": 65,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 66,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 67,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 68,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 69,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 70,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 71,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "T4",
+          "numero": 4,
+          "nombre": "DE LAS MEDIDAS",
+          "rangoArticulos": "72-85",
+          "capitulos": [
+            {
+              "id": "T4C1",
+              "numero": 1,
+              "nombre": "Clases de medidas",
+              "rangoArticulos": "72",
+              "articulos": [
+                {
+                  "numero": 72,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T4C2",
+              "numero": 2,
+              "nombre": "Medidas privativas de libertad",
+              "rangoArticulos": "73-80",
+              "articulos": [
+                {
+                  "numero": 73,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 74,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 75,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 76,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 77,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 78,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 79,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 80,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T4C3",
+              "numero": 3,
+              "nombre": "Medidas no privativas de libertad",
+              "rangoArticulos": "81-83",
+              "articulos": [
+                {
+                  "numero": 81,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 82,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 83,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T4C4",
+              "numero": 4,
+              "nombre": "Disposiciones comunes",
+              "rangoArticulos": "84-85",
+              "articulos": [
+                {
+                  "numero": 84,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 85,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "T5",
+          "numero": 5,
+          "nombre": "COMISO Y PRIVACIÓN DE BENEFICIOS",
+          "rangoArticulos": "86-96",
+          "capitulos": [
+            {
+              "id": "T5C1",
+              "numero": 1,
+              "nombre": "Comiso",
+              "rangoArticulos": "86-89",
+              "articulos": [
+                {
+                  "numero": 86,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 87,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 88,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 89,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T5C2",
+              "numero": 2,
+              "nombre": "Privación de beneficios y ganancias",
+              "rangoArticulos": "90-95",
+              "articulos": [
+                {
+                  "numero": 90,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 91,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 92,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 93,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 94,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 95,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            },
+            {
+              "id": "T5C3",
+              "numero": 3,
+              "nombre": "Disposiciones complementarias",
+              "rangoArticulos": "96",
+              "articulos": [
+                {
+                  "numero": 96,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "T6",
+          "numero": 6,
+          "nombre": "INSTANCIA DEL PROCEDIMIENTO",
+          "rangoArticulos": "97-100",
+          "capitulos": [
+            {
+              "id": "T6C1",
+              "numero": 1,
+              "nombre": "La instancia",
+              "rangoArticulos": "97-100",
+              "articulos": [
+                {
+                  "numero": 97,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 98,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 99,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 100,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "T7",
+          "numero": 7,
+          "nombre": "LA PRESCRIPCIÓN",
+          "rangoArticulos": "101-104",
+          "capitulos": [
+            {
+              "id": "T7C1",
+              "numero": 1,
+              "nombre": "Características de la prescripción",
+              "rangoArticulos": "101-104",
+              "articulos": [
+                {
+                  "numero": 101,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 102,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 103,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                },
+                {
+                  "numero": 104,
+                  "epigrafe": "",
+                  "texto": [],
+                  "palabrasClave": [],
+                  "rutasRelacionadas": [],
+                  "notas": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
